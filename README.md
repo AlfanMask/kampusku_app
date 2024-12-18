@@ -1,0 +1,1 @@
+VITE_MERCHANT_APP_URL=...?from-kampusku-app=true
