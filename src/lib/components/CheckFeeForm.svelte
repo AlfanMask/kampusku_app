@@ -28,46 +28,48 @@
 
 </script>
 
-<h2>Cek Fee 🔎</h2>
-<form id="check-fee" class="w-full flex flex-col gap-6 mt-2">
-    <div class="flex flex-col gap-2">
-        <div id="select-service" class="form-group">
-            <label for="mager-type">Pilih jenis layanan</label>
-            <select name="mager-type" id="mager-type" bind:value={serviceSelected}>
-                <option value={MAGER.ANJEM}>{MAGER.ANJEM}</option>
-                <option value={MAGER.JASTIP}>{MAGER.JASTIP}</option>
-            </select>
+<div class="!ml-4 flex flex-col gap-4">
+    <h2>Cek Fee 🔎</h2>
+    <div id="check-fee" class="w-full flex flex-col gap-6 mt-2">
+        <div class="flex w-full flex-col gap-2">
+            <div id="select-service" class="form-group">
+                <label for="mager-type">Pilih jenis layanan</label>
+                <select name="mager-type" id="mager-type" bind:value={serviceSelected}>
+                    <option value={MAGER.ANJEM}>{MAGER.ANJEM}</option>
+                    <option value={MAGER.JASTIP}>{MAGER.JASTIP}</option>
+                </select>
+            </div>
+            <!-- show merchant list if service selected is JASTIP -->
+            {#if serviceSelected == MAGER.JASTIP}
+                <!-- TODO: show merchant based on user's univ -->
+                <Autocomplete baseData={merchantsData.map(o => o.name)} bind:inputText={merchantInput} placeholder="Cari merchant.." isSqure={true} />
+                <p class="w-full opacity-25 font-light ml-1"><i>nb: kosongi jika tidak menemukan merchant</i></p>
+            {/if}
         </div>
-        <!-- show merchant list if service selected is JASTIP -->
-        {#if serviceSelected == MAGER.JASTIP}
-            <!-- TODO: show merchant based on user's univ -->
-            <Autocomplete baseData={merchantsData.map(o => o.name)} bind:inputText={merchantInput} placeholder="Cari merchant.." isSqure={true} />
-            <p class="w-full opacity-25 font-light ml-1"><i>nb: kosongi jika tidak menemukan merchant</i></p>
-        {/if}
-    </div>
-    <div id="input-dinstance" class="form-group">
-        <label for="distance-input">Jarak (dalam meter):</label>
-        <input type="number" bind:value={distance}>
-    </div>
-    <hr>
-    <div class="w-full flex justify-between">
-        <h3 class="!text-mager">Total Fee:</h3>
-        <div class="flex flex-col items-end">
-            <h3 class="!text-mager">{formatRupiah(totalFee)}</h3>
-            <span class="!text-xs !text-secondary">{activeMerchant.id && !activeMerchant.is_parkir_free ? '(termasuk parkir)' : ''}</span>
+        <div id="input-dinstance" class="form-group">
+            <label for="distance-input">Jarak (dalam meter):</label>
+            <input type="number" bind:value={distance}>
+        </div>
+        <hr>
+        <div class="w-full flex justify-between">
+            <h3 class="!text-mager">Total Fee:</h3>
+            <div class="flex flex-col items-end">
+                <h3 class="!text-mager">{formatRupiah(totalFee)}</h3>
+                <span class="!text-xs !text-secondary">{activeMerchant.id && !activeMerchant.is_parkir_free ? '(termasuk parkir)' : ''}</span>
+            </div>
         </div>
     </div>
-</form>
+</div>
 
 <style lang="postcss">
     label {
-        @apply text-[16px] text-secondary;
+        @apply text-[16px] text-secondary w-full;
     }
     input, select {
-        @apply px-4 py-2 rounded-lg bg-white border border-solid border-secondary;
+        @apply px-4 py-2 w-full rounded-lg bg-white border border-solid border-secondary;
     }
     option {
-        @apply !text-xs font-medium text-secondary;
+        @apply !text-xs w-full font-medium text-secondary;
     }
     .form-group {
         @apply w-full flex flex-col gap-2; 

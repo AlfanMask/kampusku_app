@@ -28,7 +28,7 @@
 		max-width: 32em;
 		border-radius: 8px;
 		border: none;
-		padding: 4px;
+		padding: 4px 0px;
 		margin-right:10px;
 		margin-left:10px;
 	}

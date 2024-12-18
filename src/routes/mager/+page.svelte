@@ -47,11 +47,10 @@
 				<Button text="POSTING" size="lg" bgColor="bg-black" textColor="text-white" on:click={() => goto("/mager/post")} isFullWidth />
 				<Button text="Cek Fee" size="md" textColor="text-secondary" on:click={toggleModalCheckFee} isPrimary={false} isFullWidth />
 			</div>
-	
-			<Modal bind:showModal={showModalCheckFee}>
-				<CheckFeeForm />
-			</Modal>
 		</div>
+		<Modal bind:showModal={showModalCheckFee}>
+			<CheckFeeForm />
+		</Modal>
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />
