@@ -1,0 +1,352 @@
+[
+    {
+        "id": 1,
+        "name": "Flavfour",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 2,
+        "name": "Pancong",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 3,
+        "name": "Brownis Cinta",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 4,
+        "name": "Cimol",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 5,
+        "name": "Cilor Sarjana",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 6,
+        "name": "Es Teh",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 7,
+        "name": "Rocket Chicken",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 8,
+        "name": "Ayam Penyet Andara",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 9,
+        "name": "APB Mojo",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 10,
+        "name": "Pisang Aroma",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 11,
+        "name": "Sarapan Bule",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 12,
+        "name": "Bakso Sony",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 13,
+        "name": "Geprek Fortuner",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 14,
+        "name": "Lapak Chicken",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 15,
+        "name": "Chicken On Fire",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 16,
+        "name": "Warung Bu Las",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 17,
+        "name": "Olive UNS",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 18,
+        "name": "Nasi Goreng Milyarder",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 19,
+        "name": "Harun Juice",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 20,
+        "name": "Bago Hot Chicken",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 21,
+        "name": "Sego Cokot",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 22,
+        "name": "Nasi Kuning",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 23,
+        "name": "Haus",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 24,
+        "name": "Belikopi",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 25,
+        "name": "Oma Opa",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 26,
+        "name": "Geprek Dallas",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 27,
+        "name": "Seblak Alumni",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 28,
+        "name": "Nasi Padang Urang Awak",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 29,
+        "name": "Ketoprak Bang Toro",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 30,
+        "name": "Nasi Padang Jembatan Merah (Bundo Ayu)",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 31,
+        "name": "Nasi Padang Jembatan Biru (Cahayao Minang)",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 32,
+        "name": "Mixue UNS",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 33,
+        "name": "Mie Ayam & Bakso Tinton",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 34,
+        "name": "Mojjachi Uns",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 35,
+        "name": "Tahu Gower",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 36,
+        "name": "Warung Lotek & Gado Gado Bu Warni",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 37,
+        "name": "Warung Makan Huhah",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 38,
+        "name": "Wontoniki",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 39,
+        "name": "Tweety Fried Chicken UNS (Spesial Sambel Ijo)",
+        "addon_fee": 0,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 40,
+        "name": "Warung SE",
+        "addon_fee": 1000,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 41,
+        "name": "Warung Jepun",
+        "addon_fee": 1000,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 42,
+        "name": "Pisang Sewelas",
+        "addon_fee": 1000,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 43,
+        "name": "Uma Yumcha",
+        "addon_fee": 1000,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 44,
+        "name": "Nuno Penyet",
+        "addon_fee": 1000,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 45,
+        "name": "Ayam Mas Jack",
+        "addon_fee": 1000,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 46,
+        "name": "Karizmaku",
+        "addon_fee": 1000,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 47,
+        "name": "Kumlot",
+        "addon_fee": 1000,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 48,
+        "name": "Kedai Kabut",
+        "addon_fee": 1000,
+        "is_parkir_free": false,
+        "univ": "UNS"
+    },
+    {
+        "id": 49,
+        "name": "Sate Aminah",
+        "addon_fee": 1000,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    },
+    {
+        "id": 50,
+        "name": "Takoyaki Gerdep",
+        "addon_fee": 1000,
+        "is_parkir_free": true,
+        "univ": "UNS"
+    }
+]
