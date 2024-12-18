@@ -20,7 +20,7 @@
 	<div class="min-h-screen h-full bg-base p-5">
         <Toolbar title="Shop" />
 		<div id="banner">
-			<img src="/img/background.png" alt="">
+			<!-- <img src="/img/background.png" alt=""> -->
 		</div>
 		<div id="categories">
 			
