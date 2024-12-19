@@ -60,10 +60,13 @@
                 <p class="w-full opacity-25 font-light ml-1"><i>nb: kosongi jika tidak menemukan lokasi</i></p>
             {/if}
         </div>
+        <!-- hide if select popular place -->
+        {#if (popularPlacesData.find(o => o.name == popularPlacesInput) == undefined)}
         <div id="input-dinstance" class="form-group">
             <label for="distance-input">Jarak (dalam meter):</label>
             <input type="number" bind:value={distance}>
         </div>
+        {/if}
         <hr>
         <div class="w-full flex justify-between">
             <h3 class="!text-mager">Fee:</h3>
