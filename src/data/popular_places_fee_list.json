@@ -1,0 +1,98 @@
+[
+    {
+        "id": 1,
+        "name": "Stasiun Jebres",
+        "fee": 8000,
+        "univ": "UNS"
+    },
+    {
+        "id": 2,
+        "name": "Stasiun Palur",
+        "fee": 10000,
+        "univ": "UNS"
+    },
+    {
+        "id": 3,
+        "name": "Stasiun Purwosari",
+        "fee": 17000,
+        "univ": "UNS"
+    },
+    {
+        "id": 4,
+        "name": "Stasiun Balapan",
+        "fee": 10000,
+        "univ": "UNS"
+    },
+    {
+        "id": 5,
+        "name": "Solo Paragon",
+        "fee": 13000,
+        "univ": "UNS"
+    },
+    {
+        "id": 6,
+        "name": "Solo Square",
+        "fee": 15000,
+        "univ": "UNS"
+    },
+    {
+        "id": 7,
+        "name": "Terminal Tirtonadi",
+        "fee": 10000,
+        "univ": "UNS"
+    },
+    {
+        "id": 8,
+        "name": "Pasar Gede",
+        "fee": 9000,
+        "univ": "UNS"
+    },
+    {
+        "id": 9,
+        "name": "Balai Kota",
+        "fee": 10000,
+        "univ": "UNS"
+    },
+    {
+        "id": 10,
+        "name": "Pakuwon Mall",
+        "fee": 18000,
+        "univ": "UNS"
+    },
+    {
+        "id": 11,
+        "name": "The Park Mall",
+        "fee": 18000,
+        "univ": "UNS"
+    },
+    {
+        "id": 12,
+        "name": "UMS",
+        "fee": 25000,
+        "univ": "UNS"
+    },
+    {
+        "id": 13,
+        "name": "Mangkunegaran",
+        "fee": 11000,
+        "univ": "UNS"
+    },
+    {
+        "id": 14,
+        "name": "Gatsu",
+        "fee": 12000,
+        "univ": "UNS"
+    },
+    {
+        "id": 15,
+        "name": "Kampus Mesen",
+        "fee": 8000,
+        "univ": "UNS"
+    },
+    {
+        "id": 16,
+        "name": "Kampus Moewardi - Vokasi",
+        "fee": 7000,
+        "univ": "UNS"
+    }
+]
