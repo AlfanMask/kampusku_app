@@ -348,5 +348,12 @@
         "addon_fee": 1000,
         "is_parkir_free": true,
         "univ": "UNS"
+    },
+    {
+        "id": 51,
+        "name": "Nasi Uduk",
+        "addon_fee": 0,
+        "is_parkir_free": true,
+        "univ": "UNS"
     }
 ]
