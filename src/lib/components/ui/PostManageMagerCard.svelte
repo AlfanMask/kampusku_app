@@ -5,6 +5,7 @@
 	import ModalStillDevelopment from "../modals/ModalStillDevelopment.svelte";
 	import Modal from "./Modal.svelte";
 	import ModalOnlyPremiumAccess from "../modals/ModalOnlyPremiumAccess.svelte";
+	import ModalEditPostMager from "../modals/ModalEditPostMager.svelte";
 
     export let mager: Mager;
     export let userId: string;
@@ -12,10 +13,12 @@
     let isPinned: boolean = false;
     let isClosed: boolean = false;
     let isCanceled: boolean = false;
+    let isEdited: boolean = false;
     onMount(async () => {
         isPinned = await getIsPinned(Tables.magers, mager.link)
         isClosed = await getIsClosed(mager.link)
         isCanceled = await getIsCanceled(mager.link)
+        isEdited = await getIsEdited(Tables.magers, mager.link)
     })
 
     let showDropdown1 = false;
@@ -37,6 +40,8 @@
     let isShowModalThereIsPinned: boolean = false;
     let isShowModalAlreadyClosed: boolean = false;
     let isShowModalAlreadyCanceled: boolean = false;
+    let isShowModalAlreadyEdited: boolean = false;
+    let isShowModalEditing: boolean = false;
 
     const clickOptionHandler = async (optionType: 'pin' | 'edit' | 'delete' | 'close' | 'cancel') => {
         const isPremium = await getIsPremium(userId)
@@ -55,7 +60,15 @@
                 }
             }
         } else if (optionType == "edit") {
-            // TODO: ...  
+            if (!isPremium) {
+                isShowModalNotPremium = true
+            } else {
+                if (isEdited) {
+                    isShowModalAlreadyEdited = true;
+                } else {
+                    isShowModalEditing = true;
+                }
+            }  
         } else if (optionType == "delete") {
             if (!isPremium) {
                 isShowModalNotPremium = true
@@ -97,6 +110,10 @@
 		const isAnyPinned = await fetch("/posts/is_any_pinned?user-id=" + userId + "&table=" + table, {method: "GET"}).then((res) => res.json());
         return isAnyPinned;
 	}
+    const getIsEdited = async (table: string, link: string): Promise<boolean> => {
+		const isEdited = await fetch("/posts/is_edited?table=" + table + "&link=" + link, {method: "GET"}).then((res) => res.json());
+        return isEdited;
+	}
     const getIsClosed = async (link: string): Promise<boolean> => {
 		const isClosed = await fetch("/posts/magers/is_closed?link=" + link, {method: "GET"}).then((res) => res.json());
         return isClosed;
@@ -134,7 +151,7 @@
                 <div class="absolute right-0 mt-2 border border-gray-300 rounded shadow z-50">
                     <ul class="text-sm bg-white">
                         <li class="px-4 py-2 hover:bg-gray-100 {isPinned ? 'text-gray-400' : 'text-gray-500'} cursor-pointer" on:click={() => { clickOptionHandler('pin') }}>{isPinned ? "Unpin" : "Pin"}</li>
-                        <li class="px-4 py-2 hover:bg-gray-100 text-gray-500 cursor-pointer" on:click={() => { clickOptionHandler('edit') }}>Edit</li>
+                        <li class="px-4 py-2 hover:bg-gray-100 {isEdited ? 'text-gray-400' : 'text-gray-500'} cursor-pointer" on:click={() => { clickOptionHandler('edit') }}>Edit</li>
                         <li class="px-4 py-2 hover:bg-gray-100 text-gray-500 cursor-pointer" on:click={() => { clickOptionHandler('delete') }}>Hapus</li>
                     </ul>
                 </div>
@@ -147,6 +164,10 @@
 <Modal bind:showModal={isShowModalThereIsPinned}>
     <h3 class="text-center">Ehh, ada postingan kamu yang masih ter-pin. Maksimal hanya bisa 1 pin yaa 🙌</h3>
 </Modal>
+<Modal bind:showModal={isShowModalAlreadyEdited}>
+    <h3 class="text-center">Yahh, kamu ga bisa edit postingan ini lagi karena udah pernah kamu edit sebelumnya 😢</h3>
+</Modal>
+<ModalEditPostMager bind:isShowModal={isShowModalEditing} data={mager} />
 <Modal bind:showModal={isShowModalAlreadyClosed}>
     <h3 class="text-center">Kamu ga perlu close lagi postingan ini lagi karena udah #CLOSED 😉</h3>
 </Modal>
