@@ -10,8 +10,12 @@
     export let userId: string;
 
     let isPinned: boolean = false;
+    let isClosed: boolean = false;
+    let isCanceled: boolean = false;
     onMount(async () => {
         isPinned = await getIsPinned(Tables.magers, mager.link)
+        isClosed = await getIsClosed(mager.link)
+        isCanceled = await getIsCanceled(mager.link)
     })
 
     let showDropdown1 = false;
@@ -31,6 +35,9 @@
     let isShowModalOnDev: boolean = false;
     let isShowModalNotPremium: boolean = false;
     let isShowModalThereIsPinned: boolean = false;
+    let isShowModalAlreadyClosed: boolean = false;
+    let isShowModalAlreadyCanceled: boolean = false;
+
     const clickOptionHandler = async (optionType: 'pin' | 'edit' | 'delete' | 'close' | 'cancel') => {
         const isPremium = await getIsPremium(userId)
         if (optionType == "pin") {
@@ -56,6 +63,24 @@
                 // TODO: send back data to telegram bot to delete post
                 console.log("// TODO: send back data to telegram bot to delete post")
             }
+        } else if (optionType == "close") {
+            if(!isClosed){
+                if (confirm("Apakah kamu yakin untuk menutup postingan ini?")) {
+                    // TODO: send back data to telegram bot to close post
+                    console.log("// TODO: send back data to telegram bot to close post")
+                }
+            } else {
+                isShowModalAlreadyClosed = true;
+            }
+        } else if (optionType == "cancel") {
+            if(!isCanceled){
+                if (confirm("Apakah kamu yakin untuk membatalkan postingan ini?")) {
+                    // TODO: send back data to telegram bot to cancel post
+                    console.log("// TODO: send back data to telegram bot to cancel post")
+                }
+            } else {
+                isShowModalAlreadyCanceled = true;
+            }
         }
     }
 
@@ -71,6 +96,14 @@
     const getIsAnyPinned = async (userId: string, table: Tables): Promise<boolean> => {
 		const isAnyPinned = await fetch("/posts/is_any_pinned?user-id=" + userId + "&table=" + table, {method: "GET"}).then((res) => res.json());
         return isAnyPinned;
+	}
+    const getIsClosed = async (link: string): Promise<boolean> => {
+		const isClosed = await fetch("/posts/magers/is_closed?link=" + link, {method: "GET"}).then((res) => res.json());
+        return isClosed;
+	}
+    const getIsCanceled = async (link: string): Promise<boolean> => {
+		const isClosed = await fetch("/posts/magers/is_canceled?link=" + link, {method: "GET"}).then((res) => res.json());
+        return isClosed;
 	}
 </script>
 
@@ -89,8 +122,8 @@
             {#if showDropdown1}
                 <div class="absolute right-0 mt-2 border border-gray-300 rounded shadow z-50">
                     <ul class="text-sm bg-white">
-                        <li class="px-4 py-2 hover:bg-gray-100 text-gray-500 cursor-pointer" on:click={() => { clickOptionHandler('close') }}>Close</li>
-                        <li class="px-4 py-2 hover:bg-gray-100 text-gray-500 cursor-pointer" on:click={() => { clickOptionHandler('cancel') }}>Cancel</li>
+                        <li class="px-4 py-2 hover:bg-gray-100 {isClosed ? 'text-gray-400' : 'text-gray-500'} cursor-pointer" on:click={() => { clickOptionHandler('close') }}>Close</li>
+                        <li class="px-4 py-2 hover:bg-gray-100 {isCanceled ? 'text-gray-400' : 'text-gray-500'} cursor-pointer" on:click={() => { clickOptionHandler('cancel') }}>Cancel</li>
                     </ul>
                 </div>
             {/if}
@@ -113,6 +146,12 @@
 <ModalOnlyPremiumAccess bind:isShowModalNotPremium={isShowModalNotPremium} />
 <Modal bind:showModal={isShowModalThereIsPinned}>
     <h3 class="text-center">Ehh, ada postingan kamu yang masih ter-pin. Maksimal hanya bisa 1 pin yaa 🙌</h3>
+</Modal>
+<Modal bind:showModal={isShowModalAlreadyClosed}>
+    <h3 class="text-center">Kamu ga perlu close lagi postingan ini lagi karena udah #CLOSED 😉</h3>
+</Modal>
+<Modal bind:showModal={isShowModalAlreadyCanceled}>
+    <h3 class="text-center">Kamu ga perlu membatalkan lagi postingan ini karena udah #CANCELED 😉</h3>
 </Modal>
 <ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />
 

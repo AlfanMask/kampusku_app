@@ -23,13 +23,9 @@
 8. delete_mager_by_link (1/2)
     - check if PREMIUM user ELSE show modal (only for Premium user) (done)
         - show confirmation message if want to delete or not (done) -> if YES -> send_back data to telegram bot about deleting post (TODO)
-9. close_mager_by_link
-    - fe: show black color if not closed yet ELSE show grey
-    - if clicked -> send_back data to telegram bot about closed mager post
-10. cancel_mager_by_link
-    - fe: show black color if not canceled ELSE show grey
-    - if clicked -> show modal to provide cancelation explanation -> send_back data to telegram bot about canceled mager post
-
-TODO:
-- need to make num_comments & num_reactions to show on modal when user click on menfess item from the list
-- make on fess, friends, mager new column: is_coming_from_app to get to know app performance
+9. close_mager_by_link (1/2)
+    - fe: show black color if not closed yet ELSE show grey (done)
+    - if clicked -> send_back data to telegram bot about closed mager post (TODO)
+10. cancel_mager_by_link (1/2)
+    - fe: show black color if not canceled ELSE show grey (done)
+    - if clicked -> show modal to provide cancelation explanation -> send_back data to telegram bot about canceled mager post (TODO)
