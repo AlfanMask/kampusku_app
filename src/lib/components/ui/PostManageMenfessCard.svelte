@@ -36,12 +36,18 @@
             if (!isPremium) {
                 isShowModalNotPremium = true
             } else {
-                const isAnyPinned = await getIsAnyPinned(userId, menfess.table_name)
-                if (isAnyPinned) {
-                    isShowModalThereIsPinned = true;
+                // check if UNPIN
+                if (isPinned) {
+                    // TODO: send back data to telegram bot to UNPIN post
+                    console.log("TODO: send back data to telegram bot to UNPIN post")                        
                 } else {
-                    // TODO: send back data to telegram bot
-                    console.log("TODO: send back data to telegram bot")
+                    const isAnyPinned = await getIsAnyPinned(userId, menfess.table_name)
+                    if (isAnyPinned) {
+                        isShowModalThereIsPinned = true;
+                    } else {
+                        // TODO: send back data to telegram bot to PIN post
+                        console.log("TODO: send back data to telegram bot to PIN post")
+                    }
                 }
             }
         } else if (optionType == "edit") {

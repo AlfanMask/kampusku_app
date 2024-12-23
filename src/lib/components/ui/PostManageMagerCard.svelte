@@ -49,13 +49,17 @@
             if (!isPremium) {
                 isShowModalNotPremium = true
             } else {
-                const isAnyPinned = await getIsAnyPinned(userId, mager.table_name)
-                if (isAnyPinned) {
-                    isShowModalThereIsPinned = true;
+                // check if UNPIN
+                if (isPinned) {
+                    // TODO: send back data to telegram bot to UNPIN post
+                    console.log("TODO: send back data to telegram bot to UNPIN post")                        
                 } else {
-                    if (confirm("Apakah kamu yakin untuk menghapus postingan ini?")) {
-                        // TODO: send back data to telegram bot to delete post
-                        console.log("// TODO: send back data to telegram bot to delete post")
+                    const isAnyPinned = await getIsAnyPinned(userId, mager.table_name)
+                    if (isAnyPinned) {
+                        isShowModalThereIsPinned = true;
+                    } else {
+                        // TODO: send back data to telegram bot to PIN post
+                        console.log("TODO: send back data to telegram bot to PIN post")
                     }
                 }
             }
@@ -73,8 +77,10 @@
             if (!isPremium) {
                 isShowModalNotPremium = true
             } else {
-                // TODO: send back data to telegram bot to delete post
-                console.log("// TODO: send back data to telegram bot to delete post")
+                if (confirm("Apakah kamu yakin untuk menghapus postingan ini?")) {
+                    // TODO: send back data to telegram bot to delete post
+                    console.log("// TODO: send back data to telegram bot to delete post")
+                }
             }
         } else if (optionType == "close") {
             if(!isClosed){
