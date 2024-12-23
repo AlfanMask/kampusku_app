@@ -27,7 +27,8 @@ const config = {
 				'/', 
 				'/menfess', '/menfess/post',
 				'/mager', '/mager/post',
-				'/shop', '/shop/post'
+				'/shop', '/shop/post',
+				'/menfess/all_posts'
 			],
 		}
 	}

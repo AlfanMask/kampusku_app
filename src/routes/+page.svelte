@@ -5,16 +5,18 @@
 	import { goto } from "$app/navigation";
 	import Modal from "$lib/components/ui/Modal.svelte";
 	import { page } from "$app/stores";
-	import { userUniv } from "../stores/store";
+	import { userId, userUniv } from "../stores/store";
 
 	let isComingFromTelegram: boolean = true;
 	let userName: string = "";
 	onMount(() => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
 		userName = $page.url.searchParams.get("name") || "";
 
-		// save univ info to store
+		// save informations to store
+		const user_id = $page.url.searchParams.get("user-id") || "";
+		userId.set(user_id)
 		const univ = $page.url.searchParams.get("univ") || "UNS"
 		userUniv.set(univ)
 	});

@@ -13,16 +13,12 @@
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
 	});
 
     const merchantAppUrl: string = import.meta.env.VITE_MERCHANT_APP_URL;
     const openMerchantAppHandler = () => {
-        let univ: string = ""
-        userUniv.subscribe(o => {
-            univ = o;
-        })
-        const merchantAppUrlModified = merchantAppUrl + "&univ=" + univ
+        const merchantAppUrlModified = merchantAppUrl + "&univ=" + $userUniv
         window.location.href = merchantAppUrlModified
     }
 

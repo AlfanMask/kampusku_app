@@ -13,7 +13,7 @@
     {text}
 </button>
 {:else}
-<button on:click class="{isFullWidth ? 'w-full' : 'w-fit'} { size === 'sm' ? 'px-6 py-1' : size === 'md' ? 'px-8 py-3' : 'px-10 py-4' } {isSqure ? 'rounded-lg' : 'rounded-full'} {textColor} font-semibold border-2 border-solid border-secondary ">
+<button on:click class="{isFullWidth ? 'w-full' : 'w-fit'} { size === 'sm' ? 'px-6 py-1' : size === 'md' ? 'px-8 py-3' : 'px-10 py-4' } {isSqure ? 'rounded-lg' : 'rounded-full'} {textColor} {bgColor} font-semibold border-2 border-solid border-secondary ">
     {text}
 </button>
 {/if}

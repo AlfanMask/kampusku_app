@@ -2,17 +2,27 @@
 	import { onMount } from "svelte";
 	import OnlyOpenTroughTelegram from "$lib/components/OnlyOpenTroughTelegram.svelte";
 	import Toolbar from "$lib/components/ui/Toolbar.svelte";
-	import Autocomplete from "$lib/components/ui/Autocomplete.svelte";
 	import PostManageMenfessCard from "$lib/components/ui/PostManageMenfessCard.svelte";
 	import { slide } from "svelte/transition";
 	import Button from "$lib/components/ui/Button.svelte";
 	import { goto } from "$app/navigation";
+	import { userId } from "../../stores/store";
+	import type { FessFriends } from "../../constants/tables";
+	import Searchbar from "$lib/components/ui/Searchbar.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
+		getFessFriendsData()
 	});
+
+	// get fess friends data
+	let menfessData: Array<FessFriends> = [];
+	let inputMenfessSearch: string = "";
+	const getFessFriendsData = async () => {
+		menfessData = await fetch("/menfess/get_fess_friends_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
+	}
 </script>
 
 
@@ -20,15 +30,17 @@
 	<div class="container min-h-screen h-full bg-menfess">
 		<div class="top flex flex-col p-5 gap-4">
 			<Toolbar title="💬" color="text-white" />
-			<Autocomplete baseData={[]} inputText="" placeholder="Cari menfesmu.." />
+			<Searchbar bind:inputText={inputMenfessSearch} placeholder="Cari menfesmu.." />
 		</div>
 		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6">
 			<div id="past-posts" class="w-full flex flex-col gap-4">
 				<h3 class="!text-menfess">Postinganmu</h3>
 				<div id="posts-list" class="w-full flex flex-col gap-3">
-					<PostManageMenfessCard text="Masih dalam proses pengembangan.." />
-					<PostManageMenfessCard text="Masih dalam proses pengembangan.." />
-					<PostManageMenfessCard text="Masih dalam proses pengembangan.." />
+					{#each menfessData as data }
+						{#if data.message.toLowerCase().includes(inputMenfessSearch.toLowerCase())}
+							<PostManageMenfessCard text="{data.message}" />
+						{/if}
+					{/each}
 				</div>
 			</div>
 	
