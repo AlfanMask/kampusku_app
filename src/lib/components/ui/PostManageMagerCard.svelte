@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { Tables, type Mager } from "../../../constants/tables";
-	import { truncateText } from "../../../helper/text";
+	import { removeHTMLElements, truncateText } from "../../../helper/text";
 	import ModalStillDevelopment from "../modals/ModalStillDevelopment.svelte";
 	import Modal from "./Modal.svelte";
 	import ModalOnlyPremiumAccess from "../modals/ModalOnlyPremiumAccess.svelte";
 	import ModalEditPostMager from "../modals/ModalEditPostMager.svelte";
+	import ModalPostDetail from "../modals/ModalPostDetail.svelte";
 
     export let mager: Mager;
     export let userId: string;
@@ -19,6 +20,8 @@
         isClosed = await getIsClosed(mager.link)
         isCanceled = await getIsCanceled(mager.link)
         isEdited = await getIsEdited(Tables.magers, mager.link)
+
+        mager = {...mager, message: removeHTMLElements(mager.message)}
     })
 
     let showDropdown1 = false;
@@ -42,6 +45,7 @@
     let isShowModalAlreadyCanceled: boolean = false;
     let isShowModalAlreadyEdited: boolean = false;
     let isShowModalEditing: boolean = false;
+    let isShowModalPostDetail: boolean = false;
 
     const clickOptionHandler = async (optionType: 'pin' | 'edit' | 'delete' | 'close' | 'cancel') => {
         const isPremium = await getIsPremium(userId)
@@ -138,7 +142,7 @@
     id="post-manager-card"
     class="flex justify-between items-center px-4 py-2 rounded-lg border-gray-400 border-solid border relative"
 >
-    <p>{truncateText(mager.message, 25)}</p>
+    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(mager.message, 25)}</p>
     <div class="flex gap-2">
         <div class="relative">
             <i class="fa-solid {showDropdown1 ? 'fa-xmark' : 'fa-right-left'} cursor-pointer text-secondary" on:click={() => toggleDropdownHandler('showDropdown1')}></i>
@@ -180,6 +184,7 @@
 <Modal bind:showModal={isShowModalAlreadyCanceled}>
     <h3 class="text-center">Kamu ga perlu membatalkan lagi postingan ini karena udah #CANCELED 😉</h3>
 </Modal>
+<ModalPostDetail bind:isShowModal={isShowModalPostDetail} data={mager} />
 <ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />
 
 <style lang="postcss">

@@ -2,11 +2,12 @@
 	import { onMount } from "svelte";
 	import type { MENFESS } from "../../../constants/post_types";
 	import type { FessFriends, Tables } from "../../../constants/tables";
-	import { truncateText } from "../../../helper/text";
+	import { removeHTMLElements, truncateText } from "../../../helper/text";
 	import Modal from "./Modal.svelte";
 	import ModalStillDevelopment from "../modals/ModalStillDevelopment.svelte";
 	import ModalOnlyPremiumAccess from "../modals/ModalOnlyPremiumAccess.svelte";
 	import ModalEditPostFessFriends from "../modals/ModalEditPostFessFriends.svelte";
+	import ModalPostDetail from "../modals/ModalPostDetail.svelte";
 
     export let menfess: FessFriends;
     export let userId: string;
@@ -21,6 +22,8 @@
     onMount(async () => {
         isPinned = await getIsPinned(menfess.table_name, menfess.link)
         isEdited = await getIsEdited(menfess.table_name, menfess.link)
+
+        menfess = {...menfess, message: removeHTMLElements(menfess.message)}
     })
 
     // TODO: remove this modal if setting feature already developed
@@ -29,6 +32,7 @@
     let isShowModalThereIsPinned: boolean = false;
     let isShowModalAlreadyEdited: boolean = false;
     let isShowModalEditing: boolean = false;
+    let isShowModalPostDetail: boolean = false;
 
     const clickOptionHandler = async (optionType: 'pin' | 'edit' | 'delete') => {
         const isPremium = await getIsPremium(userId)
@@ -99,7 +103,7 @@
     id="post-manager-card"
     class="flex justify-between w-full items-center px-4 py-2 rounded-lg border-gray-400 border-solid border relative"
 >
-    <p class="!text-secondary !text-xs relative z-0">{truncateText(menfess.message, 35)}</p>
+    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(menfess.message, 35)}</p>
     <div class="relative">
         <i class="fa-solid {showDropdown ? 'fa-xmark' : 'fa-bars'} cursor-pointer text-secondary" on:click={toggleDropdown}></i>
         {#if showDropdown}
@@ -122,6 +126,7 @@
     <h3 class="text-center">Yahh, kamu ga bisa edit postingan ini lagi karena udah pernah kamu edit sebelumnya 😢</h3>
 </Modal>
 <ModalEditPostFessFriends bind:isShowModal={isShowModalEditing} data={menfess} />
+<ModalPostDetail bind:isShowModal={isShowModalPostDetail} data={menfess} />
 <ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />
 
 <style lang="postcss">

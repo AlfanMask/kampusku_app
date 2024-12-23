@@ -5,8 +5,8 @@ interface FessFriends {
     deleted: boolean;
     pinned_at: string;
     is_edited: boolean;
-    // num_comments: number;
-    // num_reactions: number;
+    num_comments: number;
+    num_reactions: number;
     created_at: string;
     table_name: Tables;
 }

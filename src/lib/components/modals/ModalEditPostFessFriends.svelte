@@ -3,9 +3,18 @@
 	import type { FessFriends } from "../../../constants/tables";
 	import Modal from "../ui/Modal.svelte";
 	import Button from "../ui/Button.svelte";
+	import { removeHTMLElements } from "../../../helper/text";
     
     export let isShowModal: boolean;
     export let data: FessFriends;
+    // let formattedData: FessFriends;
+    
+    // $: {
+    //     formattedData = {
+    //         ...data,
+    //         message: removeHTMLElements(data.message)
+    //     }
+    // }
 
     const submit = () => {
         // TODO: send back data to telegram bot to edit post
