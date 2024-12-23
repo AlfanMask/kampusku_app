@@ -6,6 +6,7 @@
 	import Modal from "$lib/components/ui/Modal.svelte";
 	import { page } from "$app/stores";
 	import { userId, userUniv } from "../stores/store";
+	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	let userName: string = "";
@@ -48,9 +49,7 @@
 			<MenuCard title="Shop 🛍" on:click={() => isShowModalOnDev = true} desc="Jual atau beli barang favoritmu di Kampusku Shop.." btnText="Buka" bgImagePath="/img/bgs/bg-shop.webp" bgGradientCode="--orangish-gradient" />
 		</div>
 
-		<Modal bind:showModal={isShowModalOnDev}>
-			<h3 class="text-center">Maaf, fitur ini masih dalam proses pengembangan. Mohon menggunakan fitur Kampusku lainnya dulu 😊🙌</h3>
-		</Modal>
+		<ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />

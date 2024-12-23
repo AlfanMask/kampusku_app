@@ -51,7 +51,7 @@
 				<div id="posts-list" class="flex flex-col gap-3">
 					{#each magerDat as data }
 						{#if data.message.toLowerCase().includes(inputMagerSearch.toLowerCase())}
-						<PostManageMagerCard text={data.message} />
+						<PostManageMagerCard mager={data} userId={$userId} />
 						{/if}
 					{/each}
 				</div>

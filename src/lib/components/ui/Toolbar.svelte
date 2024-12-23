@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { prevPage } from "../../../helper/back";
+	import ModalStillDevelopment from "../modals/ModalStillDevelopment.svelte";
 	import Modal from "./Modal.svelte";
 
     export let title: string;
@@ -17,6 +18,4 @@
     <i class="fa-solid fa-gear text-2xl {color}" on:click={() => isShowModalOnDev = true}></i>
 </div>
 
-<Modal bind:showModal={isShowModalOnDev}>
-    <h3 class="text-center">Maaf, fitur ini masih dalam proses pengembangan. Mohon menggunakan fitur Kampusku lainnya dulu 😊🙌</h3>
-</Modal>
+<ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />

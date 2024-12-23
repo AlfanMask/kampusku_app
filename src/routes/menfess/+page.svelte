@@ -38,7 +38,7 @@
 				<div id="posts-list" class="w-full flex flex-col gap-3">
 					{#each menfessData as data }
 						{#if data.message.toLowerCase().includes(inputMenfessSearch.toLowerCase())}
-							<PostManageMenfessCard text="{data.message}" />
+							<PostManageMenfessCard menfess={data} userId={$userId} />
 						{/if}
 					{/each}
 				</div>
