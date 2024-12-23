@@ -25,8 +25,8 @@
     let isShowModalNotPremium: boolean = false;
     let isShowModalThereIsPinned: boolean = false;
     const clickOptionHandler = async (optionType: 'pin' | 'edit' | 'delete') => {
+        const isPremium = await getIsPremium(userId)
         if (optionType == "pin") {
-            const isPremium = await getIsPremium(userId)
             if (!isPremium) {
                 isShowModalNotPremium = true
             } else {
@@ -36,6 +36,17 @@
                 } else {
                     // TODO: send back data to telegram bot
                     console.log("TODO: send back data to telegram bot")
+                }
+            }
+        } else if (optionType == "edit") {
+            // TODO: ...  
+        } else if (optionType == "delete") {
+            if (!isPremium) {
+                isShowModalNotPremium = true
+            } else {
+                if (confirm("Apakah kamu yakin untuk menghapus postingan ini?")) {
+                    // TODO: send back data to telegram bot to delete post
+                    console.log("// TODO: send back data to telegram bot to delete post")
                 }
             }
         }
