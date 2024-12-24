@@ -7,6 +7,7 @@
 	import { page } from "$app/stores";
 	import { userId, userUniv } from "../stores/store";
 	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
+	import ModalSetting from "$lib/components/modals/ModalSetting.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	let userName: string = "";
@@ -22,7 +23,7 @@
 		userUniv.set(univ)
 	});
 
-	let isShowModalOnDev: boolean = false;
+	let isShowModalSetting: boolean = false;
 	const clickMenuHandler = (url: string) => {
 		goto(url)
 	}
@@ -39,17 +40,17 @@
 				<h2 class="text-primary">Haloo {userName}👋</h2>
 				<span class="!text-secondary !text-xs">Penuhi kebutuhanmu dengan kampusku</span>
 			</div>
-			<i class="fa-solid fa-gear text-2xl text-accent" on:click={() => isShowModalOnDev = true}></i>
+			<i class="fa-solid fa-gear text-2xl text-accent" on:click={() => isShowModalSetting = true}></i>
 		</div>
 		
 		<!-- menu -->
 		<div id="menu-items" class="flex flex-col gap-5">
 			<MenuCard title="Menfess 💬" on:click={() => clickMenuHandler('menfess')} desc="Posting pertanyaan seputar kampus di forum besar Kampusku" btnText="Buka" bgImagePath="/img/bgs/bg-menfess.webp" bgGradientCode="--blueish-gradient" />
 			<MenuCard title="Mager 🛵" on:click={() => clickMenuHandler('mager')} desc="Butuh jastip atau anjem? Dapatkan bantuan di sini!" btnText="Buka" bgImagePath="/img/bgs/bg-mager.webp" bgGradientCode="--greenish-gradient" />
-			<MenuCard title="Shop 🛍" on:click={() => isShowModalOnDev = true} desc="Jual atau beli barang favoritmu di Kampusku Shop.." btnText="Buka" bgImagePath="/img/bgs/bg-shop.webp" bgGradientCode="--orangish-gradient" />
+			<MenuCard title="Shop 🛍" on:click={() => isShowModalSetting = true} desc="Jual atau beli barang favoritmu di Kampusku Shop.." btnText="Buka" bgImagePath="/img/bgs/bg-shop.webp" bgGradientCode="--orangish-gradient" />
 		</div>
 
-		<ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />
+		<ModalSetting bind:isShowModal={isShowModalSetting} />
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />
