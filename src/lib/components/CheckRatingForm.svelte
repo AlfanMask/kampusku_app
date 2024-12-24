@@ -1,0 +1,97 @@
+<script lang="ts">
+	import { DRIVER_RATING_SERVICES, RATINGS, type DRIVER_RATINGS_POINT } from "../../constants/ratings";
+	import Button from "./ui/Button.svelte";
+	import Modal from "./ui/Modal.svelte";
+
+    export let showModal: boolean;
+    
+    let typeSelected: RATINGS = RATINGS.DRIVER;
+    let serviceSelected: DRIVER_RATING_SERVICES | null;
+    let inputUsername: string = "";
+    
+    let ratingResult: DRIVER_RATINGS_POINT = { point: 0, num_rater: 0 };
+    let stars: string = '🌟'.repeat(Math.round(ratingResult.point))
+    $: if (serviceSelected) ratingResult = { point: 0, num_rater: 0 };
+    $: stars = '🌟'.repeat(Math.round(ratingResult.point))
+
+    const findRating = async (type: RATINGS, username: string) => {
+        if (type == RATINGS.DRIVER) {
+            ratingResult = await getRatingDriver(serviceSelected || DRIVER_RATING_SERVICES.ALL_AVG, username)
+        } else if (type == RATINGS.CUSTOMER) {
+            ratingResult = await getRatingCustomer(serviceSelected || DRIVER_RATING_SERVICES.ALL_AVG, username)
+        }
+    }
+
+    const getRatingDriver = async (service: DRIVER_RATING_SERVICES, username: string) => {
+        const result: DRIVER_RATINGS_POINT = await fetch("/mager/ratings/driver_rating/?service=" + encodeURIComponent(service) + "&username=" + encodeURIComponent(username), { method: "GET" }).then((res) => res.json()) 
+        return result;
+    }
+
+    const getRatingCustomer = async (service: DRIVER_RATING_SERVICES, username: string) => {
+        const result: DRIVER_RATINGS_POINT = await fetch("/mager/ratings/customer_rating/?service=" + encodeURIComponent(service) + "&username=" + encodeURIComponent(username), { method: "GET" }).then((res) => res.json()) 
+        return result;
+    }
+
+</script>
+
+<Modal bind:showModal>
+    <div class="!ml-4 flex flex-col gap-4">
+        <h2>Cek Rating 🔎</h2>
+        <div id="check-fee" class="w-full flex flex-col gap-6 mt-2">
+            <div class="flex w-full flex-col gap-2">
+                <div id="select-person-type" class="form-group">
+                    <label for="person-type">Pilih jenis rating</label>
+                    <select name="person-type" id="person-type" bind:value={typeSelected}>
+                        <option value={RATINGS.DRIVER}>{RATINGS.DRIVER}</option>
+                        <option value={RATINGS.CUSTOMER}>{RATINGS.CUSTOMER}</option>
+                    </select>
+                </div>
+                <div id="input-username" class="form-group">
+                    <label for="person-username">Username:</label>
+                    <input type="text" bind:value={inputUsername}>
+                </div>
+                <div id="select-service" class="form-group">
+                    <label for="service-type">Pilih jenis rating</label>
+                    <select name="service-type" id="service-type" bind:value={serviceSelected}>
+                        <option value={DRIVER_RATING_SERVICES.ANJEM}>{DRIVER_RATING_SERVICES.ANJEM}</option>
+                        <option value={DRIVER_RATING_SERVICES.JASTIP}>{DRIVER_RATING_SERVICES.JASTIP}</option>
+                        <option value={DRIVER_RATING_SERVICES.ALL_AVG}>{DRIVER_RATING_SERVICES.ALL_AVG}</option>
+                    </select>
+                </div>
+                <div class="mt-2">
+                    <Button text="Cari" size="md" bgColor="bg-white" textColor="text-secondary" on:click={() => findRating(typeSelected, inputUsername)} isPrimary={false} isFullWidth />
+                </div>
+            </div>
+            <hr>
+            <div class="w-full flex justify-between">
+                <h3 class="!text-mager">{serviceSelected ? serviceSelected + ":" : "Rating:"}</h3>
+                <div class="flex flex-col items-end gap-1">
+                    <!-- if popular place is selected -> put fee using it's fee -->
+                    <h3 class="!text-mager">{stars} ({ratingResult.point})</h3>
+                    <span class="!text-xs !text-secondary">({ratingResult.num_rater} orang)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</Modal>
+
+<style lang="postcss">
+    label {
+        @apply text-[16px] text-secondary w-full;
+    }
+    input, select {
+        @apply px-4 py-2 w-full rounded-lg bg-white border border-solid border-secondary;
+    }
+    option {
+        @apply !text-xs w-full font-medium text-secondary;
+    }
+    .form-group {
+        @apply w-full flex flex-col gap-1; 
+    }
+    textarea {
+        @apply p-4
+    }
+    input::placeholder, textarea::placeholder {
+        @apply !text-sm
+    }
+</style>

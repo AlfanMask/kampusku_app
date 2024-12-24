@@ -14,6 +14,7 @@
 	import { userId } from "../../stores/store";
 	import type { Mager } from "../../constants/tables";
 	import Searchbar from "$lib/components/ui/Searchbar.svelte";
+	import CheckRatingForm from "$lib/components/CheckRatingForm.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
@@ -23,8 +24,9 @@
 		getData()
 	});
 	
-	// check fee
+	// modals
 	let showModalCheckFee: boolean = false;
+	let showModalCheckRating: boolean = false;
 	const toggleModalCheckFee = () => {
 		showModalCheckFee = !showModalCheckFee
 	}
@@ -59,12 +61,14 @@
 	
 			<div in:slide out:slide id="btn-order" class="fixed w-full px-10 bottom-[5%] left-1/2 -translate-x-1/2 h-fit flex flex-col gap-2 justify-center z-50">
 				<Button text="POSTING" size="lg" bgColor="bg-black" textColor="text-white" on:click={() => goto("/mager/post")} isFullWidth />
-				<Button text="Cek Fee" size="md" bgColor="bg-white" textColor="text-secondary" on:click={toggleModalCheckFee} isPrimary={false} isFullWidth />
+					<div class="flex gap-4">
+						<Button text="Cek Fee" size="sm" bgColor="bg-white" textColor="text-secondary" on:click={toggleModalCheckFee} isPrimary={false} isFullWidth />
+						<Button text="Cek Rating" size="sm" bgColor="bg-white" textColor="text-secondary" on:click={() => { showModalCheckRating = true }} isPrimary={false} isFullWidth />
+					</div>
 			</div>
 		</div>
-		<Modal bind:showModal={showModalCheckFee}>
-			<CheckFeeForm />
-		</Modal>
+		<CheckFeeForm bind:showModal={showModalCheckFee} />
+		<CheckRatingForm bind:showModal={showModalCheckRating} />
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />
