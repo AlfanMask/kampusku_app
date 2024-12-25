@@ -32,8 +32,6 @@
         return result;
     }
 
-    $: console.log(ratingResult)
-
 </script>
 
 <Modal bind:showModal>

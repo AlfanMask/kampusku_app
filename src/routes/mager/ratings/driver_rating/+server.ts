@@ -1,5 +1,5 @@
 // put this to prevent error when building
-export const prerender = true
+// export const prerender = true
 
 import { mysqlconn } from "$lib/db/mysql";
 import { json } from "@sveltejs/kit";
@@ -64,15 +64,12 @@ export async function GET({ url }) {
             });
         
         // calculate
-        console.log(isRegisteredDriver)
         ratingResult = {
             is_registered: isRegisteredDriver.length > 0 ? isRegisteredDriver[0]["COUNT(drivers.driver_id)"] > 0 : false,
             point: res.length > 0 ? res.reduce((sum, item) => sum + item.point, 0) / res.length : 0,
             num_rater: res.length,
         }
     }
-
-    console.log(ratingResult)
 
     return json(ratingResult)
 }

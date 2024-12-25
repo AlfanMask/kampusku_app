@@ -1,5 +1,5 @@
 // put this to prevent error when building
-export const prerender = true
+// export const prerender = true
 
 import { mysqlconn } from "$lib/db/mysql";
 import { json } from "@sveltejs/kit";
@@ -10,7 +10,8 @@ export async function GET({ url }) {
     const custUsn: string = url.searchParams.get("username") as string;
     const service: DRIVER_RATING_SERVICES = url.searchParams.get("service") as DRIVER_RATING_SERVICES;
     
-    let ratingResult: DRIVER_RATINGS_POINT = { point: 0, num_rater: 0 };
+    // TODO: make CUSTOMER_RATINGS_POINT so no need to put is_registered property
+    let ratingResult: DRIVER_RATINGS_POINT = { is_registered:true, point: 0, num_rater: 0 };
 
     if (service === DRIVER_RATING_SERVICES.ALL_AVG) {
         const res = await mysqlconn
@@ -26,6 +27,7 @@ export async function GET({ url }) {
     
         // calculate
         ratingResult = {
+            is_registered: true,
             point: res.length > 0 ? res.reduce((sum, item) => sum + item.point, 0) / res.length : 0,
             num_rater: res.length,
         }
@@ -44,6 +46,7 @@ export async function GET({ url }) {
         
         // calculate
         ratingResult = {
+            is_registered: true,
             point: res.length > 0 ? res.reduce((sum, item) => sum + item.point, 0) / res.length : 0,
             num_rater: res.length,
         }

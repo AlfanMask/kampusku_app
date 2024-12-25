@@ -13,18 +13,15 @@ export async function GET({ url }) {
     // if table is fess / friends then get these from two
     if (table == Tables.fess || table == Tables.friends) {
         let isAnyPinnedFess: boolean = await mysqlconn.query<any>(`SELECT COUNT(id) FROM fess WHERE pinned_at IS NOT NULL AND user_id = '${userId}'`).then(([rows, field]) => {
-            console.log(rows[0]['COUNT(id)'])
             return rows[0]['COUNT(id)'] > 0 ? true : false;
         })
         let isAnyPinnedFriends: boolean = await mysqlconn.query<any>(`SELECT COUNT(id) FROM friends WHERE pinned_at IS NOT NULL AND user_id = '${userId}'`).then(([rows, field]) => {
-            console.log(rows[0]['COUNT(id)'])
             return rows[0]['COUNT(id)'] > 0 ? true : false;
         })
 
         isAnyPinned = isAnyPinnedFess || isAnyPinnedFriends
     } else if (table == Tables.magers) {
         isAnyPinned = await mysqlconn.query<any>(`SELECT COUNT(id) FROM magers WHERE pinned_at IS NOT NULL AND user_id = '${userId}'`).then(([rows, field]) => {
-            console.log(rows[0]['COUNT(id)'])
             return rows[0]['COUNT(id)'] > 0 ? true : false;
         })
     }

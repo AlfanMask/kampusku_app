@@ -1,5 +1,5 @@
 // put this to prevent error when building
-export const prerender = true
+// export const prerender = true
 
 import { mysqlconn } from "$lib/db/mysql";
 import { json } from "@sveltejs/kit";
