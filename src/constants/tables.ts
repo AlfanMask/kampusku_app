@@ -8,6 +8,7 @@ interface FessFriends {
     num_comments: number;
     num_reactions: number;
     created_at: string;
+    new_msg: string,
     table_name: Tables;
 }
 

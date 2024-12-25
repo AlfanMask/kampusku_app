@@ -9,9 +9,9 @@
     let serviceSelected: DRIVER_RATING_SERVICES | null;
     let inputUsername: string = "";
     
-    let ratingResult: DRIVER_RATINGS_POINT = { point: 0, num_rater: 0 };
+    let ratingResult: DRIVER_RATINGS_POINT = { is_registered: true, point: 0, num_rater: 0 };
     let stars: string = '🌟'.repeat(Math.round(ratingResult.point))
-    $: if (serviceSelected) ratingResult = { point: 0, num_rater: 0 };
+    $: if (serviceSelected) ratingResult = { is_registered: true, point: 0, num_rater: 0 };
     $: stars = '🌟'.repeat(Math.round(ratingResult.point))
 
     const findRating = async (type: RATINGS, username: string) => {
@@ -31,6 +31,8 @@
         const result: DRIVER_RATINGS_POINT = await fetch("/mager/ratings/customer_rating/?service=" + encodeURIComponent(service) + "&username=" + encodeURIComponent(username), { method: "GET" }).then((res) => res.json()) 
         return result;
     }
+
+    $: console.log(ratingResult)
 
 </script>
 
@@ -59,17 +61,24 @@
                     </select>
                 </div>
                 <div class="mt-2">
-                    <Button text="Cari" size="md" bgColor="bg-white" textColor="text-secondary" on:click={() => findRating(typeSelected, inputUsername)} isPrimary={false} isFullWidth />
+                    <Button text="Cek" size="md" bgColor="bg-white" textColor="text-secondary" on:click={() => findRating(typeSelected, inputUsername)} isPrimary={false} isFullWidth />
                 </div>
             </div>
             <hr>
             <div class="w-full flex justify-between">
+            {#if ratingResult.is_registered}
                 <h3 class="!text-mager">{serviceSelected ? serviceSelected + ":" : "Rating:"}</h3>
                 <div class="flex flex-col items-end gap-1">
-                    <!-- if popular place is selected -> put fee using it's fee -->
-                    <h3 class="!text-mager">{stars} ({ratingResult.point})</h3>
-                    <span class="!text-xs !text-secondary">({ratingResult.num_rater} orang)</span>
+                        <!-- if popular place is selected -> put fee using it's fee -->
+                        <h3 class="!text-mager !text-xl">{stars} ({ratingResult.point})</h3>
+                        <span class="!text-xs !text-secondary">({ratingResult.num_rater} orang)</span>
                 </div>
+            {:else}
+                <div class="flex flex-col items-center gap-2">
+                    <h3>⚠️</h3>
+                    <span class="!text-red-500 text-center">Opps, orang ini bukan driver. Harap hati-hati!</span>
+                </div>
+            {/if}
             </div>
         </div>
     </div>

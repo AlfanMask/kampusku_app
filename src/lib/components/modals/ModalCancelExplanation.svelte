@@ -3,24 +3,24 @@
 	import type { Mager } from "../../../constants/tables";
 	import Modal from "../ui/Modal.svelte";
 	import Button from "../ui/Button.svelte";
-	import type { FDEdit } from "../../../constants/form_data";
+	import type { FDCancel } from "../../../constants/form_data";
 	import { DataType } from "../../../constants/data_types";
     
     export let isShowModal: boolean;
     export let data: Mager;
+    let cancelExplanation: string = "";
 
     $: {
-        // hide psot_addnon
+        // hide post_addon
         data = {...data, message: data.message.replace(/(?:Sender:.*|#.*)$/, '').trim()}
     }
 
     const submit = () => {
         // send back data to telegram bot to edit post
-        const sumbmittedData: FDEdit = {
-            type: DataType.EDIT,
-            new_msg: data.message,
+        const sumbmittedData: FDCancel = {
+            type: DataType.CANCEL,
             link: data.link,
-            table: data.table_name,
+            cancel_explanation: cancelExplanation,
         }
         window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
     }
@@ -30,12 +30,10 @@
     <div id="main" class="w-full h-fit flex flex-col items-center bg-white rounded-tl-3xl rounded-tr-3xl">
         <form id="post-form" class="w-full flex flex-col">
             <div id="input-mager-message" class="form-group">
-                <label for="mager-input">Edit Pesan:</label>
-                <textarea name="mager-input" id="mager-input" class="rounded-xl border border-solid p-2" rows="8" bind:value={data.message}></textarea>
+                <label for="mager-input">Jelaskan Alasan Cancel:</label>
+                <textarea name="mager-input" id="mager-input" class="rounded-xl border border-solid p-2" rows="4" bind:value={cancelExplanation}></textarea>
             </div>
         </form>
-
-        <p class="!text-secondary mt-2 font-light w-full"><i>ⓘ untuk sekarang hanya bisa kirim menfess berupa teks</i></p>
 
         <div in:slide out:slide id="btn-order" class="w-full mt-8 px-10 h-fit flex justify-center z-50">
             <Button text="KIRIM" size="lg" bgColor="bg-black" textColor="text-white" on:click={submit} isFullWidth />

@@ -10,6 +10,7 @@ enum DRIVER_RATING_SERVICES {
 }
 
 interface DRIVER_RATINGS_POINT {
+    is_registered: boolean,
     point: number,
     num_rater: number,
 }

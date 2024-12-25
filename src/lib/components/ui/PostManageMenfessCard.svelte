@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import type { MENFESS } from "../../../constants/post_types";
-	import type { FessFriends, Tables } from "../../../constants/tables";
+	import { Tables, type FessFriends } from "../../../constants/tables";
 	import { removeHTMLElements, truncateText } from "../../../helper/text";
 	import Modal from "./Modal.svelte";
 	import ModalStillDevelopment from "../modals/ModalStillDevelopment.svelte";
 	import ModalOnlyPremiumAccess from "../modals/ModalOnlyPremiumAccess.svelte";
 	import ModalEditPostFessFriends from "../modals/ModalEditPostFessFriends.svelte";
 	import ModalPostDetail from "../modals/ModalPostDetail.svelte";
+	import type { FDDelete, FDPin } from "../../../constants/form_data";
+	import { DataType } from "../../../constants/data_types";
 
     export let menfess: FessFriends;
     export let userId: string;
@@ -26,8 +28,7 @@
         menfess = {...menfess, message: removeHTMLElements(menfess.message)}
     })
 
-    // TODO: remove this modal if setting feature already developed
-    let isShowModalOnDev: boolean = false;
+    // modals
     let isShowModalNotPremium: boolean = false;
     let isShowModalThereIsPinned: boolean = false;
     let isShowModalAlreadyEdited: boolean = false;
@@ -42,15 +43,25 @@
             } else {
                 // check if UNPIN
                 if (isPinned) {
-                    // TODO: send back data to telegram bot to UNPIN post
-                    console.log("TODO: send back data to telegram bot to UNPIN post")                        
+                    // send back data to telegram bot to UNPIN post
+                    const sumbmittedData: FDPin = {
+                            type: DataType.UNPIN,
+                            link: menfess.link,
+                            table: menfess.table_name,
+                        }
+                    window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                 } else {
                     const isAnyPinned = await getIsAnyPinned(userId, menfess.table_name)
                     if (isAnyPinned) {
                         isShowModalThereIsPinned = true;
                     } else {
-                        // TODO: send back data to telegram bot to PIN post
-                        console.log("TODO: send back data to telegram bot to PIN post")
+                        // send back data to telegram bot to PIN post
+                        const sumbmittedData: FDPin = {
+                            type: DataType.PIN,
+                            link: menfess.link,
+                            table: menfess.table_name,
+                        }
+                        window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                     }
                 }
             }
@@ -69,8 +80,13 @@
                 isShowModalNotPremium = true
             } else {
                 if (confirm("Apakah kamu yakin untuk menghapus postingan ini?")) {
-                    // TODO: send back data to telegram bot to delete post
-                    console.log("// TODO: send back data to telegram bot to delete post")
+                    // send back data to telegram bot to delete post
+                    const sumbmittedData: FDDelete = {
+                        type: DataType.DELETE,
+                        link: menfess.link,
+                        table: menfess.table_name,
+                    }
+                    window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                 }
             }
         }
@@ -103,7 +119,7 @@
     id="post-manager-card"
     class="flex justify-between w-full items-center px-4 py-2 rounded-lg border-gray-400 border-solid border relative"
 >
-    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(menfess.message, 35)}</p>
+    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(menfess.new_msg ? menfess.new_msg : menfess.message, 35)}</p>
     <div class="relative">
         <i class="fa-solid {showDropdown ? 'fa-xmark' : 'fa-bars'} cursor-pointer text-secondary" on:click={toggleDropdown}></i>
         {#if showDropdown}
@@ -118,6 +134,7 @@
     </div>
 </div>
 
+<!-- MODALS -->
 <ModalOnlyPremiumAccess bind:isShowModalNotPremium={isShowModalNotPremium} />
 <Modal bind:showModal={isShowModalThereIsPinned}>
     <h3 class="text-center">Ehh, ada postingan kamu yang masih ter-pin. Maksimal hanya bisa 1 pin yaa 🙌</h3>
@@ -127,7 +144,6 @@
 </Modal>
 <ModalEditPostFessFriends bind:isShowModal={isShowModalEditing} data={menfess} />
 <ModalPostDetail bind:isShowModal={isShowModalPostDetail} data={menfess} />
-<ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />
 
 <style lang="postcss">
   .relative ul {

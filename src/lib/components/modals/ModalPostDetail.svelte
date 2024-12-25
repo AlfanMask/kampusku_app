@@ -1,4 +1,6 @@
 <script lang='ts'>
+	import { DataType } from "../../../constants/data_types";
+	import type { FDGetLink } from "../../../constants/form_data";
 	import type { FessFriends, Mager } from "../../../constants/tables";
 	import { truncateText, removeHTMLElements } from "../../../helper/text";
 	import Button from "../ui/Button.svelte";
@@ -8,23 +10,30 @@
     export let data: FessFriends | Mager;
 
     const submit = () => {
-        // TODO: send back data to telegram bot to get post link on bot
-        console.log("// TODO: send back data to telegram bot to get post link on bot");
+        // send back data to telegram bot to get post link on bot
+        const sumbmittedData: FDGetLink = {
+            type: DataType.GET_LINK,
+            link: data.link,
+        }
+        window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
     }
 </script>
 
 <Modal bind:showModal={isShowModal}>
     <div id="main" class="w-full h-fit pt-4 flex flex-col items-center bg-white rounded-tl-3xl rounded-tr-3xl">
-        <div class="w-full flex flex-col items-end gap-2">
-            <p class="w-full whitespace-pre-line border border-solid border-secondary rounded-lg p-4">{removeHTMLElements(truncateText(data.message, 250))}</p>
-            <div id="stats" class="flex gap-4 px-2">
-                <div id="comments" class="flex items-center gap-1">
-                    <i class="fa-regular fa-comment"></i>
-                    <span>{!data.num_comments ? "0" : data.num_comments}</span>
-                </div>
-                <div id="reactions" class="flex items-center gap-1">
-                    <i class="fa-solid fa-icons"></i>
-                    <span>{data.num_reactions}</span>
+        <div class="w-full flex flex-col gap-2">
+            <p class="w-full whitespace-pre-line border border-solid border-secondary rounded-lg p-4">{removeHTMLElements(truncateText(data.new_msg || data.message, 250))}</p>
+            <div class="flex justify-between items-center">
+                <span class="!text-secondary opacity-50 !text-xs ml-1">{data.new_msg ? 'Edited' : ''}</span>
+                <div id="stats" class="flex gap-4 px-2">
+                    <div id="comments" class="flex items-center gap-1">
+                        <i class="fa-regular fa-comment"></i>
+                        <span>{!data.num_comments ? "0" : data.num_comments}</span>
+                    </div>
+                    <div id="reactions" class="flex items-center gap-1">
+                        <i class="fa-solid fa-icons"></i>
+                        <span>{data.num_reactions}</span>
+                    </div>
                 </div>
             </div>
         </div>

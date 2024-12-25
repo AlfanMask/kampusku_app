@@ -1,4 +1,4 @@
-export enum MENFESS {
+enum MENFESS {
     "MENFESS_BIASA" = "Menfess Biasa",
     "STUDY" = "#STUDY 📚",
     "MABAR" = "#MABAR 🎮",
@@ -9,9 +9,11 @@ export enum MENFESS {
     "KEPO" = "#KEPO 🫣",
 }
 
-export enum MAGER {
+enum MAGER {
     "ANJEM" = "#ANJEM 🏍️",
     "JASTIP" = "#JASTIP 🚚",
     "OPENANJEM" = "#OPENANJEM 🏍️",
     "OPENJASTIP" = "#OPENJASTIP 🚚",
 }
+
+export { MENFESS, MAGER }

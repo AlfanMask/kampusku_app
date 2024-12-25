@@ -31,7 +31,7 @@
 		border: none;
 		padding: 4px 0px;
 		margin-right:10px;
-		margin-left:10px;
+		margin-left:20px;
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);

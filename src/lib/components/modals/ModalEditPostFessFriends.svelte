@@ -3,22 +3,25 @@
 	import type { FessFriends } from "../../../constants/tables";
 	import Modal from "../ui/Modal.svelte";
 	import Button from "../ui/Button.svelte";
-	import { removeHTMLElements } from "../../../helper/text";
+	import type { FDEdit } from "../../../constants/form_data";
+	import { DataType } from "../../../constants/data_types";
     
     export let isShowModal: boolean;
     export let data: FessFriends;
-    // let formattedData: FessFriends;
-    
-    // $: {
-    //     formattedData = {
-    //         ...data,
-    //         message: removeHTMLElements(data.message)
-    //     }
-    // }
+    $: {
+        // hide psot_addon
+        data = {...data, message: data.message.replace(/(?:Sender:.*|#.*)$/, '').trim()}
+    }
 
     const submit = () => {
-        // TODO: send back data to telegram bot to edit post
-        console.log("// TODO: send back data to telegram bot to edit post");
+        // send back data to telegram bot to edit post
+        const sumbmittedData: FDEdit = {
+            type: DataType.EDIT,
+            new_msg: data.message,
+            link: data.link,
+            table: data.table_name,
+        }
+        window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
     }
 </script>
 

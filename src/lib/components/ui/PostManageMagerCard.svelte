@@ -7,6 +7,9 @@
 	import ModalOnlyPremiumAccess from "../modals/ModalOnlyPremiumAccess.svelte";
 	import ModalEditPostMager from "../modals/ModalEditPostMager.svelte";
 	import ModalPostDetail from "../modals/ModalPostDetail.svelte";
+	import type { FDClose, FDDelete, FDPin } from "../../../constants/form_data";
+	import { DataType } from "../../../constants/data_types";
+	import ModalCancelExplanation from "../modals/ModalCancelExplanation.svelte";
 
     export let mager: Mager;
     export let userId: string;
@@ -37,14 +40,14 @@
         }
     }
 
-    // TODO: remove this modal if setting feature already developed
-    let isShowModalOnDev: boolean = false;
+    // modals
     let isShowModalNotPremium: boolean = false;
     let isShowModalThereIsPinned: boolean = false;
     let isShowModalAlreadyClosed: boolean = false;
     let isShowModalAlreadyCanceled: boolean = false;
     let isShowModalAlreadyEdited: boolean = false;
     let isShowModalEditing: boolean = false;
+    let isSHowModalCancelExplanation: boolean = false;
     let isShowModalPostDetail: boolean = false;
 
     const clickOptionHandler = async (optionType: 'pin' | 'edit' | 'delete' | 'close' | 'cancel') => {
@@ -55,15 +58,25 @@
             } else {
                 // check if UNPIN
                 if (isPinned) {
-                    // TODO: send back data to telegram bot to UNPIN post
-                    console.log("TODO: send back data to telegram bot to UNPIN post")                        
+                    // send back data to telegram bot to UNPIN post
+                    const sumbmittedData: FDPin = {
+                            type: DataType.UNPIN,
+                            link: mager.link,
+                            table: mager.table_name,
+                        }
+                    window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));                     
                 } else {
                     const isAnyPinned = await getIsAnyPinned(userId, mager.table_name)
                     if (isAnyPinned) {
                         isShowModalThereIsPinned = true;
                     } else {
-                        // TODO: send back data to telegram bot to PIN post
-                        console.log("TODO: send back data to telegram bot to PIN post")
+                        // send back data to telegram bot to PIN post
+                        const sumbmittedData: FDPin = {
+                            type: DataType.PIN,
+                            link: mager.link,
+                            table: mager.table_name,
+                        }
+                        window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                     }
                 }
             }
@@ -82,25 +95,31 @@
                 isShowModalNotPremium = true
             } else {
                 if (confirm("Apakah kamu yakin untuk menghapus postingan ini?")) {
-                    // TODO: send back data to telegram bot to delete post
-                    console.log("// TODO: send back data to telegram bot to delete post")
+                    // send back data to telegram bot to delete post
+                    const sumbmittedData: FDDelete = {
+                        type: DataType.DELETE,
+                        link: mager.link,
+                        table: mager.table_name,
+                    }
+                    window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                 }
             }
         } else if (optionType == "close") {
             if(!isClosed){
                 if (confirm("Apakah kamu yakin untuk menutup postingan ini?")) {
-                    // TODO: send back data to telegram bot to close post
-                    console.log("// TODO: send back data to telegram bot to close post")
+                    // send back data to telegram bot to close post
+                    const sumbmittedData: FDClose = {
+                        type: DataType.CLOSE,
+                        link: mager.link,
+                    }
+                    window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                 }
             } else {
                 isShowModalAlreadyClosed = true;
             }
         } else if (optionType == "cancel") {
             if(!isCanceled){
-                if (confirm("Apakah kamu yakin untuk membatalkan postingan ini?")) {
-                    // TODO: send back data to telegram bot to cancel post
-                    console.log("// TODO: send back data to telegram bot to cancel post")
-                }
+                isSHowModalCancelExplanation = true;
             } else {
                 isShowModalAlreadyCanceled = true;
             }
@@ -142,7 +161,7 @@
     id="post-manager-card"
     class="flex justify-between items-center px-4 py-2 rounded-lg border-gray-400 border-solid border relative"
 >
-    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(mager.message, 25)}</p>
+    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(mager.new_msg ? mager.new_msg : mager.message, 25)}</p>
     <div class="flex gap-2">
         <div class="relative">
             <i class="fa-solid {showDropdown1 ? 'fa-xmark' : 'fa-right-left'} cursor-pointer text-secondary" on:click={() => toggleDropdownHandler('showDropdown1')}></i>
@@ -170,6 +189,7 @@
     </div>
 </div>
 
+<!-- MODALS -->
 <ModalOnlyPremiumAccess bind:isShowModalNotPremium={isShowModalNotPremium} />
 <Modal bind:showModal={isShowModalThereIsPinned}>
     <h3 class="text-center">Ehh, ada postingan kamu yang masih ter-pin. Maksimal hanya bisa 1 pin yaa 🙌</h3>
@@ -178,6 +198,7 @@
     <h3 class="text-center">Yahh, kamu ga bisa edit postingan ini lagi karena udah pernah kamu edit sebelumnya 😢</h3>
 </Modal>
 <ModalEditPostMager bind:isShowModal={isShowModalEditing} data={mager} />
+<ModalCancelExplanation bind:isShowModal={isSHowModalCancelExplanation} data={mager} />
 <Modal bind:showModal={isShowModalAlreadyClosed}>
     <h3 class="text-center">Kamu ga perlu close lagi postingan ini lagi karena udah #CLOSED 😉</h3>
 </Modal>
@@ -185,7 +206,6 @@
     <h3 class="text-center">Kamu ga perlu membatalkan lagi postingan ini karena udah #CANCELED 😉</h3>
 </Modal>
 <ModalPostDetail bind:isShowModal={isShowModalPostDetail} data={mager} />
-<ModalStillDevelopment bind:isShowModalOnDev={isShowModalOnDev} />
 
 <style lang="postcss">
   .relative ul {
