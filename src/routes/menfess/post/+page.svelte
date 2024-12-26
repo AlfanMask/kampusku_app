@@ -14,11 +14,23 @@
 	});
 
     // handling form data
+    let isShowErrorEmptyMessage: boolean = false;
     let data: FDMenfess = {
         type: MENFESS.MENFESS_BIASA,
         message: "",
     }
+    $: {
+        if (data.message != "") {
+            isShowErrorEmptyMessage = false;
+        }
+    }
     const submit = () => {
+        // prevent sending if message is empty
+        if (data.message == "") {
+            isShowErrorEmptyMessage = true;
+            return
+        }
+        
         // send orders data to bot
         window.Telegram.WebApp.sendData(JSON.stringify({ data }));
     }
@@ -42,6 +54,9 @@
                 </div>
                 <div id="input-menfess-message" class="form-group">
                     <label for="menfess-input">Pesan:</label>
+                    {#if isShowErrorEmptyMessage}
+                        <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Pesan tidak boleh kosong!</span>
+                    {/if}
                     <textarea name="menfess-input" id="menfess-input" class="rounded-xl border border-solid p-2" rows="10" bind:value={data.message}></textarea>
                 </div>
             </form>
