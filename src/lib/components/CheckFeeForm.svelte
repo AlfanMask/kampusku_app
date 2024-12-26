@@ -15,7 +15,10 @@
     let merchantInput: string = ""
     let popularPlacesInput: string = ""
 	let distance: number = 0;
+    let isRainy: boolean = false;
+    let isMidnight: boolean = false;
 	let totalFee: number = 0;
+	let addedTotalFee: number = 0; // fee after added rainy or midnight fee
     $: {
         // if input text is matched with merchant name then select merchant
         if (merchantInput) {
@@ -28,7 +31,14 @@
             popularPlacesInput = ""
         }
     }
+    $: {
+        // ANJEM
+        if(popularPlacesInput != "") {
+            totalFee = popularPlacesData.find(o => o.name == popularPlacesInput)?.fee || 0;
+        }
+    }
 	$: {
+        // JASTIP
         if (activeMerchant.id) {
             const parkir_fee = activeMerchant?.is_parkir_free ? 0 : 2000;
             totalFee = calculatePrice(distance) + activeMerchant?.addon_fee + parkir_fee
@@ -36,6 +46,17 @@
             totalFee = calculatePrice(distance)
         }
 	}
+    $: {
+        if (isRainy && isMidnight) {
+            addedTotalFee = Math.round(totalFee * 1.9 / 1000) * 1000;
+        } else if (isRainy) {
+            addedTotalFee = Math.round(totalFee * 1.5 / 1000) * 1000;
+        } else if (isMidnight) {
+            addedTotalFee = Math.round(totalFee * 1.4 / 1000) * 1000;
+        } else {
+            addedTotalFee = 0;
+        }
+    }
 
 </script>
 
@@ -71,12 +92,25 @@
                 <input type="number" bind:value={distance}>
             </div>
             {/if}
+            <!-- other options -->
+            <div class="flex flex-col w-full gap-2">                
+                <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" bind:checked={isRainy} class="sr-only peer">
+                    <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Hujan?</span>
+                </label>
+                <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" bind:checked={isMidnight} class="sr-only peer">
+                    <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dini hari?</span>
+                </label>
+            </div>
             <hr>
             <div class="w-full flex justify-between">
                 <h3 class="!text-mager">Fee:</h3>
                 <div class="flex flex-col items-end">
                     <!-- if popular place is selected -> put fee using it's fee -->
-                    <h3 class="!text-mager">{popularPlacesInput != "" ? formatRupiah(popularPlacesData.find(o => o.name == popularPlacesInput)?.fee || 0) : formatRupiah(totalFee)}</h3>
+                    <h3 class="!text-mager">{addedTotalFee > 0 ? formatRupiah(addedTotalFee) : formatRupiah(totalFee)}</h3>
                     <span class="!text-xs !text-secondary">{activeMerchant.id && !activeMerchant.is_parkir_free ? '(termasuk parkir)' : ''}</span>
                 </div>
             </div>
