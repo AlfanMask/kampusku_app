@@ -10,7 +10,7 @@
 	import { userId } from "../../../stores/store";
     
     export let isShowModal: boolean;
-    export let userData: User;
+    export let userData: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
     let isShowSuccessUpdateModal: boolean = false;
 
     // update data on database
