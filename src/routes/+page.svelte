@@ -3,10 +3,8 @@
 	import OnlyOpenTroughTelegram from "$lib/components/OnlyOpenTroughTelegram.svelte";
 	import MenuCard from "$lib/components/MenuCard.svelte";
 	import { goto } from "$app/navigation";
-	import Modal from "$lib/components/ui/Modal.svelte";
 	import { page } from "$app/stores";
-	import { userId, userUniv } from "../stores/store";
-	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
+	import { userId, userUniv, userData } from "../stores/store";
 	import ModalSetting from "$lib/components/modals/ModalSetting.svelte";
 	import type { FacultiesUNS, GENDER } from "../constants/user";
 	import { UNIVS } from "../constants/universities";
@@ -14,7 +12,7 @@
 
 	let isComingFromTelegram: boolean = true;
 	let userName: string = "";
-	export let userData: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
+	export let user_data: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
 	onMount(async () => {
 		// only coming from telegram allowed to use the website
 		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
@@ -27,7 +25,8 @@
 		userUniv.set(univ)
 
 		// get user profile data
-		userData = await getUserData($userId)
+		user_data = await getUserData($userId)
+		userData.set(user_data)
 	});
 
 	let isShowModalSetting: boolean = false;
@@ -63,7 +62,7 @@
 			<MenuCard title="Shop 🛍" on:click={() => isShowModalSetting = true} desc="Jual atau beli barang favoritmu di Kampusku Shop.." btnText="Buka" bgImagePath="/img/bgs/bg-shop.webp" bgGradientCode="--orangish-gradient" />
 		</div>
 
-		<ModalSetting bind:isShowModal={isShowModalSetting} {userData} />
+		<ModalSetting bind:isShowModal={isShowModalSetting} userData={user_data} />
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />

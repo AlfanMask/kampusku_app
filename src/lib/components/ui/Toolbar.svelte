@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { prevPage } from "../../../helper/back";
+	import { userData } from "../../../stores/store";
 	import ModalSetting from "../modals/ModalSetting.svelte";
 	import ModalStillDevelopment from "../modals/ModalStillDevelopment.svelte";
 	import Modal from "./Modal.svelte";
-
+    
     export let title: string;
     export let color: string = "text-primary"; // tailwind color
 
@@ -18,4 +19,4 @@
     <i class="fa-solid fa-gear text-2xl {color}" on:click={() => isShowModalSetting = true}></i>
 </div>
 
-<ModalSetting bind:isShowModal={isShowModalSetting} />
+<ModalSetting bind:isShowModal={isShowModalSetting} userData={$userData} />

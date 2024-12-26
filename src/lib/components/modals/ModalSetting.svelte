@@ -2,12 +2,9 @@
 	import { slide } from "svelte/transition";
 	import Modal from "../ui/Modal.svelte";
 	import Button from "../ui/Button.svelte";
-	import { removeHTMLElements } from "../../../helper/text";
 	import type User from "../../../constants/user";
 	import { FacultiesUMS, FacultiesUNS, GENDER } from "../../../constants/user";
 	import { UNIVS } from "../../../constants/universities";
-	import { onMount } from "svelte";
-	import { userId } from "../../../stores/store";
     
     export let isShowModal: boolean;
     export let userData: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
