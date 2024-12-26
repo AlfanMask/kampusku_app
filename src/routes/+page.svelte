@@ -8,10 +8,14 @@
 	import { userId, userUniv } from "../stores/store";
 	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
 	import ModalSetting from "$lib/components/modals/ModalSetting.svelte";
+	import type { FacultiesUNS, GENDER } from "../constants/user";
+	import { UNIVS } from "../constants/universities";
+	import type User from "../constants/user";
 
 	let isComingFromTelegram: boolean = true;
 	let userName: string = "";
-	onMount(() => {
+	export let userData: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
+	onMount(async () => {
 		// only coming from telegram allowed to use the website
 		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
 		userName = $page.url.searchParams.get("name") || "";
@@ -21,12 +25,21 @@
 		userId.set(user_id)
 		const univ = $page.url.searchParams.get("univ") || "UNS"
 		userUniv.set(univ)
+
+		// get user profile data
+		userData = await getUserData($userId)
 	});
 
 	let isShowModalSetting: boolean = false;
 	const clickMenuHandler = (url: string) => {
 		goto(url)
 	}
+
+	const getUserData = async (userId: string): Promise<User> => {
+        let result: User = await fetch("/users/get?user-id=" + userId, { method: "GET" }).then((res) => res.json())
+        result = {...result, age: result.age || 0}
+        return result;
+    }
 </script>
 
 
@@ -50,7 +63,7 @@
 			<MenuCard title="Shop 🛍" on:click={() => isShowModalSetting = true} desc="Jual atau beli barang favoritmu di Kampusku Shop.." btnText="Buka" bgImagePath="/img/bgs/bg-shop.webp" bgGradientCode="--orangish-gradient" />
 		</div>
 
-		<ModalSetting bind:isShowModal={isShowModalSetting} />
+		<ModalSetting bind:isShowModal={isShowModalSetting} {userData} />
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />

@@ -10,18 +10,8 @@
 	import { userId } from "../../../stores/store";
     
     export let isShowModal: boolean;
+    export let userData: User;
     let isShowSuccessUpdateModal: boolean = false;
-    let userData: User = { user_id: "", univ: UNIVS.UNS, gender: GENDER.MALE, age: 0, faculty: FacultiesUNS["⚖️ FH"] };
-
-    onMount(async () => {
-        userData = await getUserData($userId)
-    })
-
-    const getUserData = async (userId: string): Promise<User> => {
-        let result: User = await fetch("/users/get?user-id=" + userId, { method: "GET" }).then((res) => res.json())
-        result = {...result, age: result.age || 0}
-        return result;
-    }
 
     // update data on database
     const submit = async () => {
