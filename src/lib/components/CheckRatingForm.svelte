@@ -14,8 +14,9 @@
     $: if (serviceSelected) ratingResult = { is_registered: true, point: 0, num_rater: 0 };
     // $: stars = '🌟'.repeat(Math.round(ratingResult.point))
     $: {
-        if (ratingResult.point.toString().includes('.')) { // If point is a decimal) { // Check if point is a decimal
-            const trimmedPoint = parseFloat(ratingResult.point.toExponential().split('e')[0].slice(0, 3)); // Trim to "4.5"
+        // if decimal, get only max first 3 digits
+        if (ratingResult.point.toString().includes('.')) {
+            const trimmedPoint = parseFloat(ratingResult.point.toString().slice(0, 3));
             ratingResult = {...ratingResult, point: trimmedPoint}
             stars = '🌟'.repeat(Math.round(trimmedPoint))
         } else {
