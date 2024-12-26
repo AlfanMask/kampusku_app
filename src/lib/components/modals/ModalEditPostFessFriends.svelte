@@ -30,7 +30,7 @@
     <div id="main" class="w-full h-fit flex flex-col items-center bg-white rounded-tl-3xl rounded-tr-3xl">
         <form id="post-form" class="w-full flex flex-col">
             <div id="input-menfess-message" class="form-group">
-                <label for="menfess-input">Edit Pesan TESTING 2:</label>
+                <label for="menfess-input">Edit Pesan:</label>
                 <textarea name="menfess-input" id="menfess-input" class="rounded-xl border border-solid p-2" rows="8" bind:value={data.message}></textarea>
             </div>
         </form>
