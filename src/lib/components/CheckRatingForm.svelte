@@ -12,7 +12,16 @@
     let ratingResult: DRIVER_RATINGS_POINT = { is_registered: true, point: 0, num_rater: 0 };
     let stars: string = '🌟'.repeat(Math.round(ratingResult.point))
     $: if (serviceSelected) ratingResult = { is_registered: true, point: 0, num_rater: 0 };
-    $: stars = '🌟'.repeat(Math.round(ratingResult.point))
+    // $: stars = '🌟'.repeat(Math.round(ratingResult.point))
+    $: {
+        if (ratingResult.point.toString().includes('.')) { // If point is a decimal) { // Check if point is a decimal
+            const trimmedPoint = parseFloat(ratingResult.point.toExponential().split('e')[0].slice(0, 3)); // Trim to "4.5"
+            ratingResult = {...ratingResult, point: trimmedPoint}
+            stars = '🌟'.repeat(Math.round(trimmedPoint))
+        } else {
+            stars = '🌟'.repeat(Math.round(ratingResult.point))
+        }
+    }
 
     const findRating = async (type: RATINGS, username: string) => {
         if (type == RATINGS.DRIVER) {
