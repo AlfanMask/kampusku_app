@@ -25,10 +25,8 @@ export async function GET({ url }) {
         });
         const isRegisteredDriver = await mysqlconn
         .query<any>(
-            `SELECT COUNT(drivers.driver_id) FROM ratings 
-             JOIN drivers ON ratings.target_id = drivers.driver_id 
-             WHERE ratings.person_type = '${RATINGS.DRIVER}' 
-             AND drivers.username = '${driverUsn}'`
+            `SELECT COUNT(driver_id) FROM drivers 
+            WHERE username = '${driverUsn}'`
         )
         .then(([rows, fields]) => {
             return rows;
@@ -36,7 +34,7 @@ export async function GET({ url }) {
     
         // calculate
         ratingResult = {
-            is_registered: isRegisteredDriver.length > 0 ? isRegisteredDriver[0]["COUNT(drivers.driver_id)"] > 0 : false,
+            is_registered: isRegisteredDriver.length > 0 ? isRegisteredDriver[0]["COUNT(driver_id)"] > 0 : false,
             point: res.length > 0 ? res.reduce((sum, item) => sum + item.point, 0) / res.length : 0,
             num_rater: res.length,
         }
@@ -54,10 +52,8 @@ export async function GET({ url }) {
             });
         const isRegisteredDriver = await mysqlconn
             .query<any>(
-                `SELECT COUNT(drivers.driver_id) FROM ratings 
-                 JOIN drivers ON ratings.target_id = drivers.driver_id 
-                 WHERE ratings.person_type = '${RATINGS.DRIVER}' 
-                 AND drivers.username = '${driverUsn}'`
+                `SELECT COUNT(driver_id) FROM drivers 
+                 WHERE username = '${driverUsn}'`
             )
             .then(([rows, fields]) => {
                 return rows;
@@ -65,7 +61,7 @@ export async function GET({ url }) {
         
         // calculate
         ratingResult = {
-            is_registered: isRegisteredDriver.length > 0 ? isRegisteredDriver[0]["COUNT(drivers.driver_id)"] > 0 : false,
+            is_registered: isRegisteredDriver.length > 0 ? isRegisteredDriver[0]["COUNT(driver_id)"] > 0 : false,
             point: res.length > 0 ? res.reduce((sum, item) => sum + item.point, 0) / res.length : 0,
             num_rater: res.length,
         }
