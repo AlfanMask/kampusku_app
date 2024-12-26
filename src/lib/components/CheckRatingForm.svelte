@@ -16,9 +16,9 @@
 
     const findRating = async (type: RATINGS, username: string) => {
         if (type == RATINGS.DRIVER) {
-            ratingResult = await getRatingDriver(serviceSelected || DRIVER_RATING_SERVICES.ALL_AVG, username)
+            ratingResult = await getRatingDriver(serviceSelected || DRIVER_RATING_SERVICES.ALL_AVG, username.replaceAll("@", ""))
         } else if (type == RATINGS.CUSTOMER) {
-            ratingResult = await getRatingCustomer(serviceSelected || DRIVER_RATING_SERVICES.ALL_AVG, username)
+            ratingResult = await getRatingCustomer(serviceSelected || DRIVER_RATING_SERVICES.ALL_AVG, username.replaceAll("@", ""))
         }
     }
 

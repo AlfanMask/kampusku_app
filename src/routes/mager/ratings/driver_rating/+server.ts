@@ -35,7 +35,7 @@ export async function GET({ url }) {
         // calculate
         ratingResult = {
             is_registered: isRegisteredDriver.length > 0 ? isRegisteredDriver[0]["COUNT(driver_id)"] > 0 : false,
-            point: res.length > 0 ? parseFloat((res.reduce((sum, item) => sum + item.point, 0) / res.length).toFixed(1)) : 0,
+            point: res.length > 0 ? Math.round((res.reduce((sum, item) => sum + item.point, 0) / res.length) * 10) / 10 : 0,
             num_rater: res.length,
         }
     } else {
@@ -62,7 +62,7 @@ export async function GET({ url }) {
         // calculate
         ratingResult = {
             is_registered: isRegisteredDriver.length > 0 ? isRegisteredDriver[0]["COUNT(driver_id)"] > 0 : false,
-            point: res.length > 0 ? parseFloat((res.reduce((sum, item) => sum + item.point, 0) / res.length).toFixed(1)) : 0,
+            point: res.length > 0 ? Math.round((res.reduce((sum, item) => sum + item.point, 0) / res.length) * 10) / 10 : 0,
             num_rater: res.length,
         }
     }
