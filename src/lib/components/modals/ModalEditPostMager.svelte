@@ -11,7 +11,7 @@
 
     $: {
         // hide psot_addnon
-        data = {...data, message: data.message.replace(/(?:Sender:.*|#.*)$/, '').trim()}
+        data = {...data, message: data.message.replace(/(?:Sender:.*|#.*)$/, '')}
     }
 
     const submit = () => {

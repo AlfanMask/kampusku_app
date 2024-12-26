@@ -13,7 +13,7 @@
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
 		getFessFriendsData()
 	});
 
