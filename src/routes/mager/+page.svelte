@@ -48,7 +48,7 @@
 			<Toolbar title="🛵" color="text-white" />
 			<Searchbar bind:inputText={inputMagerSearch} placeholder="Cari magermu.." />
 		</div>
-		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6">
+		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6 pb-40">
 			{#if magerData.length == 0}
 			<Spinner />
 			{:else}

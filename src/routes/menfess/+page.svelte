@@ -33,7 +33,7 @@
 			<Toolbar title="💬" color="text-white" />
 			<Searchbar bind:inputText={inputMenfessSearch} placeholder="Cari menfesmu.." />
 		</div>
-		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6">
+		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6 pb-32">
 			{#if menfessData.length == 0}
 			<Spinner />
 			{:else}
