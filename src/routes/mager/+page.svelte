@@ -35,8 +35,10 @@
 	// get mager data
 	let magerData: Array<Mager> = [];
 	let inputMagerSearch: string = "";
+	let isLoading: boolean = true;
 	const getData = async () => {
 		magerData = await fetch("/mager/get_mager_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
+		isLoading = false;
 	}
 	
 </script>
@@ -49,14 +51,18 @@
 			<Searchbar bind:inputText={inputMagerSearch} placeholder="Cari magermu.." />
 		</div>
 		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6 pb-40">
-			{#if magerData.length == 0}
+			{#if isLoading}
 			<Spinner />
 			{:else}
 			<div id="past-posts" class="w-full flex flex-col gap-4">
+				{#if magerData.length == 0}
+				<h3 class="!text-mager text-center mt-40">Kamu belum punya postingan, silakan buat dengan tombol POSTING di bawah 😊</h3>
+				{:else}
 				<div class="w-full flex flex-col gap-1">
 					<h3 class="!text-mager">Postinganmu</h3>
 					<p class="!text-secondary !text-[10px] font-light w-full"><i>ⓘ maksimal 50 postingan terakhir</i></p>
 				</div>
+				{/if}
 				<div id="posts-list" class="flex flex-col gap-3">
 					{#each magerData as data }
 						{#if data.message.toLowerCase().includes(inputMagerSearch.toLowerCase())}
