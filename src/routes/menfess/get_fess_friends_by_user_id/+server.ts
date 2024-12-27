@@ -9,7 +9,7 @@ export async function GET({ url }) {
     const userId = url.searchParams.get("user-id");
     
     // get last 25 fess data
-    let last20FessData: Array<FessFriends> = await mysqlconn.query(`SELECT id, message, link, deleted, pinned_at, is_edited, num_comments, num_reactions, created_at, new_msg, 'fess' AS table_name FROM fess WHERE user_id = '${userId}' AND deleted IS NULL ORDER BY id DESC LIMIT 25`).then(([rows, fields]) => {
+    let last20FessData: Array<FessFriends> = await mysqlconn.query(`SELECT id, message, link, deleted, pinned_at, is_edited, num_comments, num_reactions, created_at, new_msg, 'fess' AS table_name FROM fess WHERE user_id = '${userId}' AND deleted = 0 ORDER BY id DESC LIMIT 25`).then(([rows, fields]) => {
         return rows as Array<FessFriends>;
     })
 
