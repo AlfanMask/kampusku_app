@@ -49,7 +49,10 @@
 		</div>
 		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6">
 			<div id="past-posts" class="w-full flex flex-col gap-4">
-				<h3 class="!text-mager">Postinganmu</h3>
+				<div class="w-full flex flex-col gap-1">
+					<h3 class="!text-menfess">Postinganmu</h3>
+					<p class="!text-secondary !text-[10px] font-light w-full"><i>ⓘ maksimal 50 postingan terakhir</i></p>
+				</div>
 				<div id="posts-list" class="flex flex-col gap-3">
 					{#each magerDat as data }
 						{#if data.message.toLowerCase().includes(inputMagerSearch.toLowerCase())}
