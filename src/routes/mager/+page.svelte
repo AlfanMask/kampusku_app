@@ -54,7 +54,7 @@
 			{:else}
 			<div id="past-posts" class="w-full flex flex-col gap-4">
 				<div class="w-full flex flex-col gap-1">
-					<h3 class="!text-menfess">Postinganmu</h3>
+					<h3 class="!text-mager">Postinganmu</h3>
 					<p class="!text-secondary !text-[10px] font-light w-full"><i>ⓘ maksimal 50 postingan terakhir</i></p>
 				</div>
 				<div id="posts-list" class="flex flex-col gap-3">

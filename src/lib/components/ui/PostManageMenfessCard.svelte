@@ -121,7 +121,7 @@
     id="post-manager-card"
     class="flex justify-between w-full items-center px-4 py-2 rounded-lg border-gray-400 border-solid border relative"
 >
-    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(menfess.new_msg ? menfess.new_msg : menfess.message, 35)}</p>
+    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-sm relative z-0 w-full cursor-pointer">{truncateText(menfess.new_msg ? menfess.new_msg : menfess.message, 35)}</p>
     <div class="relative">
         <i class="fa-solid {showDropdown ? 'fa-xmark' : 'fa-bars'} cursor-pointer text-secondary" on:click={toggleDropdown}></i>
         {#if showDropdown}

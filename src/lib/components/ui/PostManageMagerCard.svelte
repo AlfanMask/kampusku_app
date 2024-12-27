@@ -163,7 +163,7 @@
     id="post-manager-card"
     class="flex justify-between items-center px-4 py-2 rounded-lg border-gray-400 border-solid border relative"
 >
-    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-xs relative z-0 w-full cursor-pointer">{truncateText(mager.new_msg ? mager.new_msg : mager.message, 25)}</p>
+    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-sm relative z-0 w-full cursor-pointer">{truncateText(mager.new_msg ? mager.new_msg : mager.message, 35)}</p>
     <div class="flex gap-2">
         <div class="relative">
             <i class="fa-solid {showDropdown1 ? 'fa-xmark' : 'fa-right-left'} cursor-pointer text-secondary" on:click={() => toggleDropdownHandler('showDropdown1')}></i>
