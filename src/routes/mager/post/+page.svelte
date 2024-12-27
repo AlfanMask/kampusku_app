@@ -122,7 +122,7 @@
                     {#if isShowErrorEmptyJastip}
                         <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Pesan jastip tidak boleh kosong!</span>
                     {/if}
-                    <textarea bind:value={data.message} name="mager-input" id="mager-input" class="rounded-xl border border-solid p-2" rows="10" placeholder="{data.type == MAGER.JASTIP ? 'Ketikkan barang/makanan jastip + lokasi pengantaran..' : data.type == MAGER.ANJEM ? 'Masukkan note tambahan jika diperlukan..' : 'Masukkan pesan..'}"></textarea>
+                    <textarea bind:value={data.message} name="mager-input" id="mager-input" class="rounded-xl border border-solid p-2" rows="{data.type == MAGER.ANJEM ? 7 : 10}" placeholder="{data.type == MAGER.JASTIP ? 'Ketikkan barang/makanan jastip + lokasi pengantaran..' : data.type == MAGER.ANJEM ? 'Masukkan note tambahan jika diperlukan..' : 'Masukkan pesan..'}"></textarea>
                 </div>
             </div>
     
