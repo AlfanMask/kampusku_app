@@ -14,8 +14,21 @@
         // hide post_addon
         data = {...data, message: data.message.replace(/(?:Sender:.*|#.*)$/, '').trim()}
     }
+    
+    let isShowErrorEmptyMessage: boolean = false;
+    $: {
+        if (cancelExplanation != "") {
+            isShowErrorEmptyMessage = false;
+        }
+    }
 
     const submit = () => {
+        // prevent sending if message is empty
+        if (cancelExplanation == "") {
+            isShowErrorEmptyMessage = true;
+            return
+        }
+        
         // send back data to telegram bot to edit post
         const sumbmittedData: FDCancel = {
             type: DataType.CANCEL,
@@ -32,6 +45,9 @@
             <div id="input-mager-message" class="form-group">
                 <label for="mager-input">Jelaskan Alasan Cancel:</label>
                 <textarea name="mager-input" id="mager-input" class="rounded-xl border border-solid p-2" rows="4" bind:value={cancelExplanation}></textarea>
+                {#if isShowErrorEmptyMessage}
+                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Pesan tidak boleh kosong!</span>
+                {/if}
             </div>
         </form>
 
