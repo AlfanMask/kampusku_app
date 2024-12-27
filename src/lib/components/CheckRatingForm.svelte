@@ -12,7 +12,6 @@
     let ratingResult: DRIVER_RATINGS_POINT = { is_registered: true, point: 0, num_rater: 0 };
     let stars: string = '🌟'.repeat(Math.round(ratingResult.point))
     $: if (serviceSelected) ratingResult = { is_registered: true, point: 0, num_rater: 0 };
-    // $: stars = '🌟'.repeat(Math.round(ratingResult.point))
     $: {
         // if decimal, get only max first 3 digits
         if (ratingResult.point.toString().includes('.')) {
@@ -61,7 +60,7 @@
                     <input type="text" bind:value={inputUsername}>
                 </div>
                 <div id="select-service" class="form-group">
-                    <label for="service-type">Pilih jenis rating</label>
+                    <label for="service-type">Pilih layanan</label>
                     <select name="service-type" id="service-type" bind:value={serviceSelected}>
                         <option value={DRIVER_RATING_SERVICES.ANJEM}>{DRIVER_RATING_SERVICES.ANJEM}</option>
                         <option value={DRIVER_RATING_SERVICES.JASTIP}>{DRIVER_RATING_SERVICES.JASTIP}</option>

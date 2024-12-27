@@ -9,6 +9,7 @@
 	import type { FacultiesUNS, GENDER } from "../constants/user";
 	import { UNIVS } from "../constants/universities";
 	import type User from "../constants/user";
+	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	let userName: string = "";
@@ -30,6 +31,7 @@
 	});
 
 	let isShowModalSetting: boolean = false;
+	let isShowModalDevelopment: boolean = false;
 	const clickMenuHandler = (url: string) => {
 		goto(url)
 	}
@@ -59,10 +61,11 @@
 		<div id="menu-items" class="flex flex-col gap-5">
 			<MenuCard title="Menfess 💬" on:click={() => clickMenuHandler('menfess')} desc="Posting pertanyaan seputar kampus di forum besar Kampusku" btnText="Buka" bgImagePath="/img/bgs/bg-menfess.webp" bgGradientCode="--blueish-gradient" />
 			<MenuCard title="Mager 🛵" on:click={() => clickMenuHandler('mager')} desc="Butuh jastip atau anjem? Dapatkan bantuan di sini!" btnText="Buka" bgImagePath="/img/bgs/bg-mager.webp" bgGradientCode="--greenish-gradient" />
-			<MenuCard title="Shop 🛍" on:click={() => isShowModalSetting = true} desc="Jual atau beli barang favoritmu di Kampusku Shop.." btnText="Buka" bgImagePath="/img/bgs/bg-shop.webp" bgGradientCode="--orangish-gradient" />
+			<MenuCard title="Shop 🛍" on:click={() => isShowModalDevelopment = true} desc="Jual atau beli barang favoritmu di Kampusku Shop.." btnText="Buka" bgImagePath="/img/bgs/bg-shop.webp" bgGradientCode="--orangish-gradient" />
 		</div>
 
 		<ModalSetting bind:isShowModal={isShowModalSetting} userData={user_data} />
+		<ModalStillDevelopment bind:isShowModalOnDev={isShowModalDevelopment}  />
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />
