@@ -9,6 +9,7 @@
 	import { userId } from "../../stores/store";
 	import type { FessFriends } from "../../constants/tables";
 	import Searchbar from "$lib/components/ui/Searchbar.svelte";
+	import Spinner from "$lib/components/Spinner.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
@@ -33,6 +34,9 @@
 			<Searchbar bind:inputText={inputMenfessSearch} placeholder="Cari menfesmu.." />
 		</div>
 		<div id="main" class="w-full h-full flex flex-col items-center min-h-screen bg-white rounded-tl-3xl rounded-tr-3xl p-6">
+			{#if menfessData.length == 0}
+			<Spinner />
+			{:else}
 			<div id="past-posts" class="w-full flex flex-col gap-4">
 				<div class="w-full flex flex-col gap-1">
 					<h3 class="!text-menfess">Postinganmu</h3>
@@ -50,6 +54,7 @@
 			<div in:slide out:slide id="btn-order" class="fixed w-full px-10 bottom-[5%] left-1/2 -translate-x-1/2 h-fit flex justify-center z-50">
 				<Button text="POSTING" size="lg" bgColor="bg-black" textColor="text-white" on:click={() => goto("/menfess/post")} isFullWidth />
 			</div>
+			{/if}
 		</div>
 	</div>
 {:else}
