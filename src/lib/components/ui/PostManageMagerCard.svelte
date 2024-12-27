@@ -70,13 +70,15 @@
                     if (isAnyPinned) {
                         isShowModalThereIsPinned = true;
                     } else {
-                        // send back data to telegram bot to PIN post
-                        const sumbmittedData: FDPin = {
-                            type: DataType.PIN,
-                            link: mager.link,
-                            table: mager.table_name,
+                        if (confirm("Apakah kamu yakin untuk PIN postingan ini?")) {
+                            // send back data to telegram bot to PIN post
+                            const sumbmittedData: FDPin = {
+                                type: DataType.PIN,
+                                link: mager.link,
+                                table: mager.table_name,
+                            }
+                            window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                         }
-                        window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
                     }
                 }
             }
