@@ -9,18 +9,22 @@
     let serviceSelected: DRIVER_RATING_SERVICES | null;
     let inputUsername: string = "";
     
-    let ratingResult: DRIVER_RATINGS_POINT = { is_registered: true, point: 0, num_rater: 0 };
-    let stars: string = '🌟'.repeat(Math.round(ratingResult.point))
-    $: if (serviceSelected) ratingResult = { is_registered: true, point: 0, num_rater: 0 };
+    let ratingResult: DRIVER_RATINGS_POINT|null = null;
+    let stars: string = '🌟'.repeat(0)
+
     $: {
         // if decimal, get only max first 3 digits
-        if (ratingResult.point.toString().includes('.')) {
+        if (ratingResult?.point.toString().includes('.')) {
             const trimmedPoint = parseFloat(ratingResult.point.toString().slice(0, 3));
             ratingResult = {...ratingResult, point: trimmedPoint}
             stars = '🌟'.repeat(Math.round(trimmedPoint))
         } else {
-            stars = '🌟'.repeat(Math.round(ratingResult.point))
+            stars = '🌟'.repeat(Math.round(ratingResult?.point ?? 0))
         }
+    }
+    
+    const resetRatingResult = () => {
+        ratingResult = null;
     }
 
     const findRating = async (type: RATINGS, username: string) => {
@@ -41,6 +45,7 @@
         return result;
     }
 
+    console.log("ratingResult: ", ratingResult)
 </script>
 
 <Modal bind:showModal>
@@ -61,7 +66,7 @@
                 </div>
                 <div id="select-service" class="form-group">
                     <label for="service-type">Pilih layanan</label>
-                    <select name="service-type" id="service-type" bind:value={serviceSelected}>
+                    <select name="service-type" id="service-type" bind:value={serviceSelected} on:change={resetRatingResult}>
                         <option value={DRIVER_RATING_SERVICES.ANJEM}>{DRIVER_RATING_SERVICES.ANJEM}</option>
                         <option value={DRIVER_RATING_SERVICES.JASTIP}>{DRIVER_RATING_SERVICES.JASTIP}</option>
                         <option value={DRIVER_RATING_SERVICES.ALL_AVG}>{DRIVER_RATING_SERVICES.ALL_AVG}</option>
@@ -73,18 +78,25 @@
             </div>
             <hr>
             <div class="w-full flex justify-between">
-            {#if ratingResult.is_registered}
-                <h3 class="!text-mager">{serviceSelected ? serviceSelected + ":" : "Rating:"}</h3>
-                <div class="flex flex-col items-end gap-1">
-                        <!-- if popular place is selected -> put fee using it's fee -->
-                        <h3 class="!text-mager !text-xl">{stars} ({ratingResult.point})</h3>
-                        <span class="!text-xs !text-secondary">({ratingResult.num_rater} orang)</span>
-                </div>
-            {:else}
-                <div class="flex flex-col items-center gap-2">
-                    <h3>⚠️</h3>
-                    <span class="!text-red-500 text-center">Opps, orang ini bukan driver. Harap hati-hati!</span>
-                </div>
+            {#if ratingResult}
+                {#if ratingResult?.is_registered && (ratingResult.num_rater > 0)}
+                    <h3 class="!text-mager">{serviceSelected ? serviceSelected + ":" : "Rating:"}</h3>
+                    <div class="flex flex-col items-end gap-1">
+                            <!-- if popular place is selected -> put fee using it's fee -->
+                            <h3 class="!text-mager !text-xl">{stars} ({ratingResult.point})</h3>
+                            <span class="!text-xs !text-secondary">({ratingResult.num_rater} orang)</span>
+                    </div>
+                {:else if ratingResult?.is_registered && (ratingResult.num_rater == 0)}
+                    <div class="w-full flex flex-col items-center gap-2">
+                        <h3 class="text-center">🥲</h3>
+                        <span class="!text-red-500 text-center">Opps, driver ini belum punya rating</span>
+                    </div>
+                {:else if !ratingResult?.is_registered}
+                    <div class="flex flex-col items-center gap-2">
+                        <h3>⚠️</h3>
+                        <span class="!text-red-500 text-center">Opps, orang ini bukan driver. Harap hati-hati!</span>
+                    </div>
+                {/if}
             {/if}
             </div>
         </div>
