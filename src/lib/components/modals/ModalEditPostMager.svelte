@@ -5,22 +5,24 @@
 	import Button from "../ui/Button.svelte";
 	import type { FDEdit } from "../../../constants/form_data";
 	import { DataType } from "../../../constants/data_types";
+	import { onMount } from "svelte";
     
     export let isShowModal: boolean;
     export let data: Mager;
+    let formData: Mager;
 
-    $: {
-        // hide psot_addnon
-        data = {...data, message: data.message.replace(/(?:Sender:.*|#.*)$/, '')}
-    }
+    onMount(() => {
+        // hide post_addon
+        formData = {...data, message: data.message.replace(/(?:Sender:.*|#.*)\s*$/, '').trimEnd()}
+    })
 
     const submit = () => {
         // send back data to telegram bot to edit post
         const sumbmittedData: FDEdit = {
             type: DataType.EDIT,
-            new_msg: data.message,
-            link: data.link,
-            table: data.table_name,
+            new_msg: formData.message,
+            link: formData.link,
+            table: formData.table_name,
         }
         window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));
     }
@@ -31,7 +33,9 @@
         <form id="post-form" class="w-full flex flex-col">
             <div id="input-mager-message" class="form-group">
                 <label for="mager-input">Edit Pesan:</label>
-                <textarea name="mager-input" id="mager-input" class="rounded-xl border border-solid p-2" rows="8" bind:value={data.message}></textarea>
+                {#if formData}
+                    <textarea name="mager-input" id="mager-input" class="rounded-xl border border-solid p-2" rows="8" bind:value={formData.message}></textarea>
+                {/if}
             </div>
         </form>
 
