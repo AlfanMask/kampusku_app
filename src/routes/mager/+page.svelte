@@ -11,11 +11,13 @@
 	import { MAGER } from "../../constants/post_types";
 	import { calculatePrice } from "../../helper/numbers";
 	import CheckFeeForm from "$lib/components/CheckFeeForm.svelte";
-	import { userId } from "../../stores/store";
+	import { userId, isGrid } from "../../stores/store";
 	import type { Mager } from "../../constants/tables";
 	import Searchbar from "$lib/components/ui/Searchbar.svelte";
 	import CheckRatingForm from "$lib/components/CheckRatingForm.svelte";
 	import Spinner from "$lib/components/Spinner.svelte";
+	import PostManageMagerCardBox from "$lib/components/ui/PostManageMagerCardBox.svelte";
+	import SwitchPreview from "$lib/components/ui/SwitchPreview.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
@@ -40,7 +42,6 @@
 		magerData = await fetch("/mager/get_mager_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
 		isLoading = false;
 	}
-	
 </script>
 
 
@@ -58,18 +59,31 @@
 				{#if magerData.length == 0}
 				<h3 class="!text-mager text-center mt-40">Kamu belum punya postingan, silakan buat dengan tombol POSTING di bawah 😊</h3>
 				{:else}
-				<div class="w-full flex flex-col gap-1">
+				<div class="w-full flex justify-between items-end">
+					<div class="w-full flex flex-col">
 					<h3 class="!text-mager">Postinganmu</h3>
-					<p class="!text-secondary !text-[10px] font-light w-full"><i>ⓘ maksimal 50 postingan terakhir</i></p>
+						<p class="!text-secondary !text-[10px] font-light w-full"><i>ⓘ maksimal 50 postingan terakhir</i></p>
+					</div>
+					<SwitchPreview firstItem="fa-solid fa-list" secondItem="fa-solid fa-grip-vertical" />
 				</div>
 				{/if}
-				<div id="posts-list" class="flex flex-col gap-3">
+				{#if (!$isGrid)}
+				<div id="posts-list" class="w-full flex flex-col gap-3">
 					{#each magerData as data }
 						{#if data.message.toLowerCase().includes(inputMagerSearch.toLowerCase())}
 						<PostManageMagerCard mager={data} userId={$userId} />
 						{/if}
 					{/each}
 				</div>
+				{:else}
+				<div id="posts-grid" class="w-full grid grid-cols-2 gap-3">
+					{#each magerData as data }
+						{#if data.message.toLowerCase().includes(inputMagerSearch.toLowerCase())}
+						<PostManageMagerCardBox mager={data} userId={$userId} />
+						{/if}
+					{/each}
+				</div>
+				{/if}
 			</div>
 	
 			<div in:slide out:slide id="btn-order" class="fixed w-full px-10 bottom-[5%] left-1/2 -translate-x-1/2 h-fit flex flex-col gap-2 justify-center z-50">

@@ -6,3 +6,4 @@ import { UNIVS } from "../constants/universities";
 export const userId = writable<string>("")
 export const userUniv = writable<string>("");
 export const userData = writable<User>({ user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS });
+export const isGrid = writable<boolean>(false); // for preview mode in menfess and mager

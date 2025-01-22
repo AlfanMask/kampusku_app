@@ -4,7 +4,7 @@
 	import MenuCard from "$lib/components/MenuCard.svelte";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import { userId, userUniv, userData } from "../stores/store";
+	import { userId, userUniv, userData, isGrid } from "../stores/store";
 	import ModalSetting from "$lib/components/modals/ModalSetting.svelte";
 	import type { FacultiesUNS, GENDER } from "../constants/user";
 	import { UNIVS } from "../constants/universities";
@@ -24,6 +24,9 @@
 		userId.set(user_id)
 		const univ = $page.url.searchParams.get("univ") || "UNS"
 		userUniv.set(univ)
+		const isGridPrev = $page.url.searchParams.get("is-grid") == "1" ? true : false;
+		console.log("isGridPrev: ", $page.url.searchParams.get("is-grid"))
+		isGrid.set(isGridPrev)
 
 		// get user profile data
 		user_data = await getUserData($userId)
