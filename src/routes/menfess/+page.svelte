@@ -25,7 +25,7 @@
 	let inputMenfessSearch: string = "";
 	let isLoading: boolean = true;
 	const getFessFriendsData = async () => {
-		menfessData = await fetch("/menfess/get_fess_friends_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
+		menfessData = await fetch("/api/fess/get/fess_friends_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
 		isLoading = false;
 	}
 </script>

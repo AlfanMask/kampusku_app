@@ -10,7 +10,7 @@
     }
 
     const updateData = async (isGrid: boolean) => {
-        await fetch("/users/update/is_grid_preference", {
+        await fetch("/api/users/update/is_grid_preference_by_user_id", {
             method: "POST",
             body: JSON.stringify({
                 isGrid,

@@ -36,12 +36,12 @@
     }
 
     const getRatingDriver = async (service: DRIVER_RATING_SERVICES, username: string) => {
-        const result: DRIVER_RATINGS_POINT = await fetch("/mager/ratings/driver_rating/?service=" + encodeURIComponent(service) + "&username=" + encodeURIComponent(username), { method: "GET" }).then((res) => res.json()) 
+        const result: DRIVER_RATINGS_POINT = await fetch("/api/magers/get/ratings/driver_rating/?service=" + encodeURIComponent(service) + "&username=" + encodeURIComponent(username), { method: "GET" }).then((res) => res.json()) 
         return result;
     }
 
     const getRatingCustomer = async (service: DRIVER_RATING_SERVICES, username: string) => {
-        const result: DRIVER_RATINGS_POINT = await fetch("/mager/ratings/customer_rating/?service=" + encodeURIComponent(service) + "&username=" + encodeURIComponent(username), { method: "GET" }).then((res) => res.json()) 
+        const result: DRIVER_RATINGS_POINT = await fetch("/api/magers/get/ratings/customer_rating/?service=" + encodeURIComponent(service) + "&username=" + encodeURIComponent(username), { method: "GET" }).then((res) => res.json()) 
         return result;
     }
 

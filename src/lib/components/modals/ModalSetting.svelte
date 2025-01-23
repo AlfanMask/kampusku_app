@@ -12,7 +12,7 @@
 
     // update data on database
     const submit = async () => {
-        const response = await fetch("/users/update", {
+        const response = await fetch("/api/users/update/user_by_user_id", {
             method: "POST",
             body: JSON.stringify(userData)
         })

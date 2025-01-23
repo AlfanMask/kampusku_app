@@ -24,8 +24,7 @@
 		userId.set(user_id)
 		const univ = $page.url.searchParams.get("univ") || "UNS"
 		userUniv.set(univ)
-		const isGridPrev = $page.url.searchParams.get("is-grid") == "1" ? true : false;
-		console.log("isGridPrev: ", $page.url.searchParams.get("is-grid"))
+		const isGridPrev = await getIsGridPrev(user_id);
 		isGrid.set(isGridPrev)
 
 		// get user profile data
@@ -40,10 +39,15 @@
 	}
 
 	const getUserData = async (userId: string): Promise<User> => {
-        let result: User = await fetch("/users/get?user-id=" + userId, { method: "GET" }).then((res) => res.json())
+        let result: User = await fetch("/api/users/get/user_by_user_id?user-id=" + userId, { method: "GET" }).then((res) => res.json())
         result = {...result, age: result.age || 0}
         return result;
     }
+
+	const getIsGridPrev = async (userId: string): Promise<boolean> => {
+		const isGridPrev = await fetch("/api/users/get/is_grid_preference_by_user_id?user-id=" + userId, {method: "GET"}).then((res) => res.json());
+		return isGridPrev;
+	}
 </script>
 
 

@@ -19,10 +19,10 @@
     let isCanceled: boolean = false;
     let isEdited: boolean = false;
     onMount(async () => {
-        isPinned = await getIsPinned(Tables.magers, mager.link)
+        isPinned = await getIsPinned(mager.link)
         isClosed = await getIsClosed(mager.link)
         isCanceled = await getIsCanceled(mager.link)
-        isEdited = await getIsEdited(Tables.magers, mager.link)
+        isEdited = await getIsEdited(mager.link)
 
         mager = {...mager, message: removeHTMLElements(mager.message)}
     })
@@ -66,7 +66,7 @@
                         }
                     window.Telegram.WebApp.sendData(JSON.stringify({ data: sumbmittedData }));                     
                 } else {
-                    const isAnyPinned = await getIsAnyPinned(userId, mager.table_name)
+                    const isAnyPinned = await getIsAnyPinned(userId)
                     if (isAnyPinned) {
                         isShowModalThereIsPinned = true;
                     } else {
@@ -130,27 +130,27 @@
 
     // apis
     const getIsPremium = async (userId: string): Promise<boolean> => {
-        const isPremium = await fetch("/users/is_premium?user-id=" + userId, { method: "GET" }).then((res) => res.json())
+        const isPremium = await fetch("/api/users/get/is_premium_by_user_id?user-id=" + userId, { method: "GET" }).then((res) => res.json())
         return isPremium;
     }
-    const getIsPinned = async (table: string, link: string): Promise<boolean> => {
-		const isPinned = await fetch("/posts/is_pinned?table=" + table + "&link=" + link, {method: "GET"}).then((res) => res.json());
+    const getIsPinned = async (link: string): Promise<boolean> => {
+		const isPinned = await fetch("/api/magers/get/is_pinned_by_link?link=" + link, {method: "GET"}).then((res) => res.json());
         return isPinned;
 	}
-    const getIsAnyPinned = async (userId: string, table: Tables): Promise<boolean> => {
-		const isAnyPinned = await fetch("/posts/is_any_pinned?user-id=" + userId + "&table=" + table, {method: "GET"}).then((res) => res.json());
+    const getIsAnyPinned = async (userId: string): Promise<boolean> => {
+		const isAnyPinned = await fetch("/api/magers/get/is_any_pinned_by_user_id?user-id=" + userId, {method: "GET"}).then((res) => res.json());
         return isAnyPinned;
 	}
-    const getIsEdited = async (table: string, link: string): Promise<boolean> => {
-		const isEdited = await fetch("/posts/is_edited?table=" + table + "&link=" + link, {method: "GET"}).then((res) => res.json());
+    const getIsEdited = async (link: string): Promise<boolean> => {
+		const isEdited = await fetch("/api/magers/get/is_edited_by_link?link=" + link, {method: "GET"}).then((res) => res.json());
         return isEdited;
 	}
     const getIsClosed = async (link: string): Promise<boolean> => {
-		const isClosed = await fetch("/posts/magers/is_closed?link=" + link, {method: "GET"}).then((res) => res.json());
+		const isClosed = await fetch("/api/magers/get/is_closed_by_link?link=" + link, {method: "GET"}).then((res) => res.json());
         return isClosed;
 	}
     const getIsCanceled = async (link: string): Promise<boolean> => {
-		const isClosed = await fetch("/posts/magers/is_canceled?link=" + link, {method: "GET"}).then((res) => res.json());
+		const isClosed = await fetch("/api/magers/get/is_canceled_by_link?link=" + link, {method: "GET"}).then((res) => res.json());
         return isClosed;
 	}
 </script>

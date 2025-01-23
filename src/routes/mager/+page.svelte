@@ -39,7 +39,7 @@
 	let inputMagerSearch: string = "";
 	let isLoading: boolean = true;
 	const getData = async () => {
-		magerData = await fetch("/mager/get_mager_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
+		magerData = await fetch("/api/magers/get/mager_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
 		isLoading = false;
 	}
 </script>
