@@ -163,7 +163,7 @@
     id="post-manager-card"
     class="flex flex-col justify-between w-full items-center px-4 py-2 rounded-lg border-gray-400 border-solid border relative"
 >
-    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-sm relative z-0 w-full cursor-pointer pb-4 h-full">{truncateText(mager.new_msg ? mager.new_msg : mager.message, 25)}</p>
+    <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-sm relative z-0 w-full cursor-pointer pb-4 h-full" style="word-break: break-all; overflow-wrap: break-word;">{truncateText(mager.new_msg ? mager.new_msg : mager.message, 35)}</p>
     <div id="bottom" class="w-full flex justify-between items-center">
         <div id="stats" class="flex gap-2">
             <div id="comments" class="flex items-center gap-1">
