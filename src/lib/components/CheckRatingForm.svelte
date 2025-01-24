@@ -45,7 +45,6 @@
         return result;
     }
 
-    console.log("ratingResult: ", ratingResult)
 </script>
 
 <Modal bind:showModal>
