@@ -49,4 +49,9 @@ interface FDCancel {
     cancel_explanation: string,
 }
 
-export type { FDMenfess, FDMager, FDGetLink, FDPin, FDEdit, FDDelete, FDClose, FDCancel }
+interface FDDelvote {
+    type: DataType,
+    link: string,
+}
+
+export type { FDMenfess, FDMager, FDGetLink, FDPin, FDEdit, FDDelete, FDClose, FDCancel, FDDelvote }

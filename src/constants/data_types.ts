@@ -6,5 +6,6 @@ export enum DataType {
     "EDIT" = "EDIT",
     "DELETE" = "DELETE",
     "CLOSE" = "CLOSE",
-    "CANCEL" = "CANCEL"
+    "CANCEL" = "CANCEL",
+    "DELVOTE" = "DELVOTE",
 }

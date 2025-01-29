@@ -15,6 +15,7 @@
 	import Fab from "$lib/components/FAB.svelte";
 	import type FabItem from "../../constants/fab_item";
 	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
+	import ModalDelvote from "$lib/components/modals/ModalDelvote.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
@@ -36,11 +37,9 @@
 	const postingHandler = () => {
 		goto("/menfess/post")
 	}
-	let isShowModalDevelopment: boolean = false;
+	let isShowModalDelvote: boolean = false;
 	const delvoteHandler = () => {
-		// TODO: delvote feature
-		console.log("TODO: delvote feature")
-		isShowModalDevelopment = true;
+		isShowModalDelvote = true;
 	}
 	const btnList: Array<FabItem> = [
 		{icon: "fa-solid fa-pencil", onClick: postingHandler},
@@ -93,7 +92,7 @@
 			{/if}
 		</div>
 	</div>
-	<ModalStillDevelopment bind:isShowModalOnDev={isShowModalDevelopment}  />
+	<ModalDelvote bind:isShowModal={isShowModalDelvote} />
 {:else}
 	<OnlyOpenTroughTelegram />
 {/if}
