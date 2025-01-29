@@ -8,4 +8,5 @@ export enum DataType {
     "CLOSE" = "CLOSE",
     "CANCEL" = "CANCEL",
     "DELVOTE" = "DELVOTE",
+    "SEND_ANONYMOUS_MESSAGE" = "SEND_ANONYMOUS_MESSAGE",
 }

@@ -54,4 +54,10 @@ interface FDDelvote {
     link: string,
 }
 
-export type { FDMenfess, FDMager, FDGetLink, FDPin, FDEdit, FDDelete, FDClose, FDCancel, FDDelvote }
+interface FDSendAnonMsg {
+    type: DataType,
+    username: string,
+    message: string,
+}
+
+export type { FDMenfess, FDMager, FDGetLink, FDPin, FDEdit, FDDelete, FDClose, FDCancel, FDDelvote, FDSendAnonMsg }

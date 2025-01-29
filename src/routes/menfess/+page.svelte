@@ -16,11 +16,13 @@
 	import type FabItem from "../../constants/fab_item";
 	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
 	import ModalDelvote from "$lib/components/modals/ModalDelvote.svelte";
+	import ModalSendAnonymousMessage from "$lib/components/modals/ModalSendAnonymousMessage.svelte";
+	import ModalOnlyPremiumAccess from "$lib/components/modals/ModalOnlyPremiumAccess.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
 		getFessFriendsData()
 	});
 
@@ -41,10 +43,27 @@
 	const delvoteHandler = () => {
 		isShowModalDelvote = true;
 	}
+	let isShowModalSendAnonMsg: boolean = false;
+	let isShowModalNotPremium: boolean = false;
+	const sendAnonymousMsgHandler = async () => {
+		const isPremium = await getIsPremium($userId)
+		if (!isPremium) {
+			isShowModalNotPremium = true
+			return
+		}
+		isShowModalSendAnonMsg = true;
+	}
 	const btnList: Array<FabItem> = [
 		{icon: "fa-solid fa-pencil", onClick: postingHandler},
         {icon: "fa-solid fa-square-poll-vertical", onClick: delvoteHandler},
+        {icon: "fa-solid fa-paper-plane", onClick: sendAnonymousMsgHandler},
 	]
+
+	// apis
+	const getIsPremium = async (userId: string): Promise<boolean> => {
+        const isPremium = await fetch("/api/users/get/is_premium_by_user_id?user-id=" + userId, { method: "GET" }).then((res) => res.json())
+        return isPremium;
+    }
 </script>
 
 {#if isComingFromTelegram}
@@ -92,7 +111,11 @@
 			{/if}
 		</div>
 	</div>
+
+	<!-- MODALS -->
 	<ModalDelvote bind:isShowModal={isShowModalDelvote} />
+	<ModalSendAnonymousMessage bind:isShowModal={isShowModalSendAnonMsg} />
+	<ModalOnlyPremiumAccess bind:isShowModalNotPremium={isShowModalNotPremium} />
 {:else}
 	<OnlyOpenTroughTelegram />
 {/if}

@@ -16,7 +16,7 @@
 	export let user_data: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
 	onMount(async () => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
 		userName = $page.url.searchParams.get("name") || "";
 
 		// save informations to store
