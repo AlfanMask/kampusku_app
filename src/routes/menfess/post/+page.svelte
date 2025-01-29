@@ -10,7 +10,7 @@
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
 	});
 
     // handling form data
@@ -61,8 +61,11 @@
                 </div>
             </form>
     
-            <p class="!text-secondary mt-2 font-light w-full"><i>ⓘ untuk sekarang hanya bisa kirim menfess berupa teks</i></p>
-    
+            <div class="flex flex-col gap-1 mt-4">
+                <p class="!text-secondary mt-2 font-light w-full !m-0"><i>ⓘ kamu bisa reply postingan lain dengan menyalin link postingan tersebut ke kolom pesan di atas</i></p>
+                <p class="!text-secondary mt-2 font-light w-full !m-0"><i>ⓘ untuk sekarang hanya bisa kirim menfess berupa teks</i></p>
+            </div>
+            
             <div in:slide out:slide id="btn-order" class="fixed w-full px-10 bottom-[5%] left-1/2 -translate-x-1/2 h-fit flex justify-center z-50">
                 <Button text="KIRIM " size="lg" bgColor="bg-black" textColor="text-white" on:click={submit} isFullWidth />
             </div>
