@@ -12,6 +12,9 @@
 	import Spinner from "$lib/components/Spinner.svelte";
 	import PostManageMenfessCardBox from "$lib/components/ui/PostManageMenfessCardBox.svelte";
 	import SwitchPreview from "$lib/components/ui/SwitchPreview.svelte";
+	import Fab from "$lib/components/FAB.svelte";
+	import type FabItem from "../../constants/fab_item";
+	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
@@ -28,6 +31,21 @@
 		menfessData = await fetch("/api/fess/get/fess_friends_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
 		isLoading = false;
 	}
+
+	// fab buttons
+	const postingHandler = () => {
+		goto("/menfess/post")
+	}
+	let isShowModalDevelopment: boolean = false;
+	const delvoteHandler = () => {
+		// TODO: delvote feature
+		console.log("TODO: delvote feature")
+		isShowModalDevelopment = true;
+	}
+	const btnList: Array<FabItem> = [
+		{icon: "fa-solid fa-pencil", onClick: postingHandler},
+        {icon: "fa-solid fa-square-poll-vertical", onClick: delvoteHandler},
+	]
 </script>
 
 {#if isComingFromTelegram}
@@ -71,12 +89,11 @@
 				{/if}
 			</div>
 	
-			<div in:slide out:slide id="btn-order" class="fixed w-full px-10 bottom-[5%] left-1/2 -translate-x-1/2 h-fit flex justify-center z-50">
-				<Button text="POSTING" size="lg" bgColor="bg-black" textColor="text-white" on:click={() => goto("/menfess/post")} isFullWidth />
-			</div>
+			<Fab btnList={btnList} color="bg-menfess" />
 			{/if}
 		</div>
 	</div>
+	<ModalStillDevelopment bind:isShowModalOnDev={isShowModalDevelopment}  />
 {:else}
 	<OnlyOpenTroughTelegram />
 {/if}

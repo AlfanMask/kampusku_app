@@ -18,6 +18,9 @@
 	import Spinner from "$lib/components/Spinner.svelte";
 	import PostManageMagerCardBox from "$lib/components/ui/PostManageMagerCardBox.svelte";
 	import SwitchPreview from "$lib/components/ui/SwitchPreview.svelte";
+	import Fab from "$lib/components/FAB.svelte";
+	import type FabItem from "../../constants/fab_item";
+	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	onMount(() => {
@@ -30,9 +33,6 @@
 	// modals
 	let showModalCheckFee: boolean = false;
 	let showModalCheckRating: boolean = false;
-	const toggleModalCheckFee = () => {
-		showModalCheckFee = !showModalCheckFee
-	}
 
 	// get mager data
 	let magerData: Array<Mager> = [];
@@ -42,6 +42,29 @@
 		magerData = await fetch("/api/magers/get/mager_by_user_id?user-id=" + $userId, {method: "GET"}).then((res) => res.json());
 		isLoading = false;
 	}
+
+	// fab buttons
+	const postingHandler = () => {
+		goto("/mager/post")
+	}
+	const checkFeeHandler = () => {
+		showModalCheckFee = !showModalCheckFee
+	}
+	const checkRatingHandler = () => {
+		showModalCheckRating = !showModalCheckRating
+	}
+	let isShowModalDevelopment: boolean = false;
+	const delvoteHandler = () => {
+		// TODO: delvote feature
+		console.log("TODO: delvote feature")
+		isShowModalDevelopment = true;
+	}
+	const btnList: Array<FabItem> = [
+		{icon: "fa-solid fa-pencil", onClick: postingHandler},
+		{icon: "fa-solid fa-money-bill", onClick: checkFeeHandler},
+		{icon: "fa-solid fa-star", onClick: checkRatingHandler},
+        {icon: "fa-solid fa-square-poll-vertical", onClick: delvoteHandler},
+	]
 </script>
 
 
@@ -86,17 +109,19 @@
 				{/if}
 			</div>
 	
-			<div in:slide out:slide id="btn-order" class="fixed w-full px-10 bottom-[5%] left-1/2 -translate-x-1/2 h-fit flex flex-col gap-2 justify-center z-50">
+			<!-- <div in:slide out:slide id="btn-order" class="fixed w-full px-10 bottom-[5%] left-1/2 -translate-x-1/2 h-fit flex flex-col gap-2 justify-center z-50">
 				<Button text="POSTING" size="lg" bgColor="bg-black" textColor="text-white" on:click={() => goto("/mager/post")} isFullWidth />
 					<div class="flex gap-4">
 						<Button text="Cek Fee" size="sm" bgColor="bg-white" textColor="text-secondary" on:click={toggleModalCheckFee} isPrimary={false} isFullWidth />
 						<Button text="Cek Rating" size="sm" bgColor="bg-white" textColor="text-secondary" on:click={() => { showModalCheckRating = true }} isPrimary={false} isFullWidth />
 					</div>
-			</div>
+			</div> -->
+			<Fab btnList={btnList} color="bg-mager" />
 			{/if}
 		</div>
 		<CheckFeeForm bind:showModal={showModalCheckFee} />
 		<CheckRatingForm bind:showModal={showModalCheckRating} />
+		<ModalStillDevelopment bind:isShowModalOnDev={isShowModalDevelopment}  />
 	</div>
 {:else}
 	<OnlyOpenTroughTelegram />
