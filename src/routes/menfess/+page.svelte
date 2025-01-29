@@ -60,7 +60,7 @@
 			{:else}
 			<div id="past-posts" class="w-full flex flex-col gap-4">
 				{#if menfessData.length == 0}
-				<h3 class="!text-menfess text-center mt-40">Kamu belum punya postingan, silakan buat dengan tombol POSTING di bawah 😊</h3>
+				<h3 class="!text-menfess text-center mt-40">Kamu belum punya postingan, silakan buat dengan tombol di bawah 😊</h3>
 				{:else}
 				<div class="w-full flex justify-between items-end">
 					<div class="w-full flex flex-col">
