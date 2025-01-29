@@ -18,6 +18,7 @@ export async function GET({ url }) {
             `SELECT ratings.point FROM ratings 
              JOIN drivers ON ratings.target_id = drivers.driver_id 
              WHERE ratings.person_type = '${RATINGS.DRIVER}' 
+             AND ratings.is_deleted = 0
              AND drivers.username = '${driverUsn}'`
         )
         .then(([rows, fields]) => {
@@ -44,6 +45,7 @@ export async function GET({ url }) {
                 `SELECT ratings.point FROM ratings 
                  JOIN drivers ON ratings.target_id = drivers.driver_id 
                  WHERE ratings.person_type = '${RATINGS.DRIVER}' 
+                 AND ratings.is_deleted = 0
                  AND drivers.username = '${driverUsn}' 
                  AND ratings.type = '${service}'`
             )

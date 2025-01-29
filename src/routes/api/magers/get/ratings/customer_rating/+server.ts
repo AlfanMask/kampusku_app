@@ -18,7 +18,8 @@ export async function GET({ url }) {
         .query<any>(
             `SELECT ratings.point FROM ratings 
              JOIN users ON ratings.target_id = users.user_id 
-             WHERE ratings.person_type = '${RATINGS.CUSTOMER}' 
+             WHERE ratings.person_type = '${RATINGS.CUSTOMER}'
+             AND ratings.is_deleted = 0
              AND users.username = '${custUsn}'`
         )
         .then(([rows, fields]) => {
@@ -37,6 +38,7 @@ export async function GET({ url }) {
                 `SELECT ratings.point FROM ratings 
                  JOIN users ON ratings.target_id = users.user_id 
                  WHERE ratings.person_type = '${RATINGS.CUSTOMER}' 
+                 AND ratings.is_deleted = 0
                  AND users.username = '${custUsn}' 
                  AND ratings.type = '${service}'`
             )
