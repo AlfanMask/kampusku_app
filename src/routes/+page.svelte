@@ -10,13 +10,14 @@
 	import { UNIVS } from "../constants/universities";
 	import type User from "../constants/user";
 	import ModalStillDevelopment from "$lib/components/modals/ModalStillDevelopment.svelte";
+	import ModalPremiumInformation from "$lib/components/modals/ModalPremiumInformation.svelte";
 
 	let isComingFromTelegram: boolean = true;
 	let userName: string = "";
 	export let user_data: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
 	onMount(async () => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
 		userName = $page.url.searchParams.get("name") || "";
 
 		// save informations to store
@@ -33,6 +34,7 @@
 	});
 
 	let isShowModalSetting: boolean = false;
+	let isShowModalPremiumInformation: boolean = false;
 	let isShowModalDevelopment: boolean = false;
 	const clickMenuHandler = (url: string) => {
 		goto(url)
@@ -61,7 +63,10 @@
 				<h2 class="text-primary">Haloo {userName}👋</h2>
 				<span class="!text-secondary !text-xs">Penuhi kebutuhanmu dengan kampusku</span>
 			</div>
-			<i class="fa-solid fa-gear text-2xl text-accent" on:click={() => isShowModalSetting = true}></i>
+			<div class="flex gap-4">
+				<i class="fa-regular fa-circle-dot text-2xl text-menfess" on:click={() => isShowModalPremiumInformation = true}></i>
+				<i class="fa-solid fa-gear text-2xl " on:click={() => isShowModalSetting = true}></i>
+			</div>
 		</div>
 		
 		<!-- menu -->
@@ -72,6 +77,7 @@
 		</div>
 
 		<ModalSetting bind:isShowModal={isShowModalSetting} userData={user_data} />
+		{#if (user_data.user_id != "" && isShowModalPremiumInformation)}<ModalPremiumInformation bind:isShowModal={isShowModalPremiumInformation} userId={user_data.user_id} />{/if}
 		<ModalStillDevelopment bind:isShowModalOnDev={isShowModalDevelopment}  />
 	</div>
 {:else}
