@@ -34,6 +34,10 @@
 
     // if year is more than 2030 -> then put LIFETIME instead
     const checkAndReplaceLifetime = (dateString: string) => {
+        if (dateString === "-") {
+            return dateString
+        }
+        
         const year = parseInt(dateString.split('/')[2].split(' ')[0], 10);
         if (year >= 30) {
             return "LIFETIME";
