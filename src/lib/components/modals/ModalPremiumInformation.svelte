@@ -10,10 +10,12 @@
 
     let premiums: Premiums = {premium_menfess: "-", premium_anon: "-", premium_driver: "-" }
     let quotas: Quotas = { special_quota: 0, bid_quota: 0 }
+    let isDriver: boolean = false;
 
     onMount( async() => {
         premiums = await getPremiumInformation(userId);
         quotas = await getQuotaInformation(userId);
+        isDriver = await getIsDriver(userId)
     })
 
     // apis
@@ -23,6 +25,10 @@
     }
     const getQuotaInformation = async (userId: string) => {
         const result: Quotas = await fetch(`/api/users/get/all_quotas_by_user_id?user-id=` + userId, {method: "GET"}).then((res) => res.json());
+        return result;
+    }
+    const getIsDriver = async (userId: string) => {
+        const result: boolean = await fetch(`/api/drivers/get/is_driver_by_user_id?user-id=` + userId, {method: "GET"}).then((res) => res.json());
         return result;
     }
 </script>
@@ -43,8 +49,8 @@
                 <span class="!text-secondary !text-[10px]"><i>(Otomatis direset tiap Senin)</i></span>
             </div>
             <div class="w-full flex justify-center gap-4">
-                <IconText icon="fa-solid fa-paper-plane" bgColor="bg-mager" description="Posting" description2={quotas.special_quota.toString()}/>
-                <IconText icon="fa-solid fa-location-crosshairs" bgColor="bg-mager" description="Bid" description2={quotas.bid_quota.toString()} />
+                <IconText icon="fa-solid fa-paper-plane" bgColor="bg-mager" description="Posting" description2={premiums.premium_menfess == "-" ? quotas.special_quota.toString() : '∞'}/>
+                <IconText icon="fa-solid fa-location-crosshairs" bgColor="bg-mager" description="Bid" description2={isDriver ? premiums.premium_driver == "-" ? quotas.bid_quota.toString() : '∞' : '-'} />
             </div>
         </div>
     </div>
