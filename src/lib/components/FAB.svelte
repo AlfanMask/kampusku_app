@@ -12,7 +12,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div in:slide out:slide id="fab" on:click={() => {isOpen = !isOpen}} class="fixed bottom-[4%] right-6 flex justify-center items-center z-50 w-14 h-14 {isOpen ? 'bg-gray-400' : color} rounded-full shadow-lg cursor-pointer">
-    <i id="main" class="!text-white {isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-plus'}"></i>
+    <i id="main" class="!text-white {isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'}"></i>
 </div>
 {#if isOpen}
 <div in:fly={{ y: 100, duration: 500 }} out:fly={{ y: 100, duration: 500 }} class="fixed flex-col bottom-[12%] right-6">
