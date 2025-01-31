@@ -188,7 +188,7 @@
                 {/if}
             </div>
             <div class="relative">
-                <i class="fa-solid {showDropdown2 ? 'fa-xmark' : 'fa-bars'} cursor-pointer text-secondary" on:click={() => toggleDropdownHandler('showDropdown2')}></i>
+                <i class="fa-solid {showDropdown2 ? 'fa-xmark' : 'fa-ellipsis-vertical'} cursor-pointer text-secondary" on:click={() => toggleDropdownHandler('showDropdown2')}></i>
                 {#if showDropdown2}
                     <div class="absolute right-0 mt-2 border border-gray-300 rounded shadow z-50">
                         <ul class="text-sm bg-white">

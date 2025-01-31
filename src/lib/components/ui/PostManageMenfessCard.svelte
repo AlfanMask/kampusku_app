@@ -123,7 +123,7 @@
 >
     <p on:click={() => { isShowModalPostDetail = true }} class="!text-secondary !text-sm relative z-0 w-full cursor-pointer">{truncateText(menfess.new_msg ? menfess.new_msg : menfess.message, 35)}</p>
     <div class="relative">
-        <i class="fa-solid {showDropdown ? 'fa-xmark' : 'fa-bars'} cursor-pointer text-secondary" on:click={toggleDropdown}></i>
+        <i class="fa-solid {showDropdown ? 'fa-xmark' : 'fa-ellipsis-vertical'} cursor-pointer text-secondary" on:click={toggleDropdown}></i>
         {#if showDropdown}
             <div class="absolute right-0 mt-2 border border-secondary rounded shadow z-50">
                 <ul class="text-sm bg-white">
