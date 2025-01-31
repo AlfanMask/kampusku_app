@@ -31,6 +31,15 @@
         const result: boolean = await fetch(`/api/drivers/get/is_driver_by_user_id?user-id=` + userId, {method: "GET"}).then((res) => res.json());
         return result;
     }
+
+    // if year is more than 2030 -> then put LIFETIME instead
+    const checkAndReplaceLifetime = (dateString: string) => {
+        const year = parseInt(dateString.split('/')[2].split(' ')[0], 10);
+        if (year >= 30) {
+            return "LIFETIME";
+        }
+        return dateString;
+    };
 </script>
 
 <Modal bind:showModal={isShowModal}>
@@ -38,9 +47,9 @@
         <div id="section-1" class="w-full flex flex-col items-center gap-2">
             <h3 class="mb-2">Premium Kamu</h3>
             <div class="w-full flex justify-center gap-4">
-                <IconText icon="fa-solid fa-comments" bgColor="bg-menfess" description="Menfess" description2={premiums.premium_menfess}/>
-                <IconText icon="fa-solid fa-people-arrows" bgColor="bg-menfess" description="Anon" description2={premiums.premium_anon} />
-                <IconText icon="fa-solid fa-person-biking" bgColor="bg-menfess" description="Driver" description2={premiums.premium_driver} />
+                <IconText icon="fa-solid fa-comments" bgColor="bg-menfess" description="Menfess" description2={checkAndReplaceLifetime(premiums.premium_menfess)}/>
+                <IconText icon="fa-solid fa-people-arrows" bgColor="bg-menfess" description="Anon" description2={checkAndReplaceLifetime(premiums.premium_anon)} />
+                <IconText icon="fa-solid fa-person-biking" bgColor="bg-menfess" description="Driver" description2={checkAndReplaceLifetime(premiums.premium_driver)} />
             </div>
         </div>
         <div id="section-2" class="w-full flex flex-col items-center gap-2">
