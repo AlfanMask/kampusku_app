@@ -15,8 +15,8 @@
       if (target.files && target.files.length > 0) {
         const selectedFile = target.files[0];
   
-        if (selectedFile.size > 1024 * 1024) { // 1 MB limit
-          alert("Ukuran file harus kurang dari 1 MB!");
+        if (selectedFile.size > 1024 * 1024 * 3) { // 1 MB limit
+          alert("Ukuran file harus kurang dari 3 MB!");
           return;
         }
   
