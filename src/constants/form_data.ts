@@ -1,10 +1,13 @@
 import type { DataType } from "./data_types";
+import type { FileTypes } from "./file_types";
 import type { MAGER, MENFESS } from "./post_types";
 import type { Tables } from "./tables";
 
 interface FDMenfess {
     type: MENFESS,
     message: string,
+    attachment_file_id?: string,
+    attachment_file_type?: FileTypes,
 }
 
 interface FDMager {
@@ -12,6 +15,8 @@ interface FDMager {
     message?: string,
     from?: string,
     destination?: string,
+    attachment_file_id?: string,
+    attachment_file_type?: FileTypes,
 }
 
 interface FDGetLink {
