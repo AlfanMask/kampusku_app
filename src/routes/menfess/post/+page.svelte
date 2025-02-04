@@ -130,7 +130,7 @@
     label {
         @apply text-[16px] text-secondary;
     }
-    input, select {
+    input, select, textarea {
         @apply px-4 py-2 rounded-lg bg-white border border-solid border-secondary;
     }
     option {

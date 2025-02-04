@@ -179,7 +179,6 @@
     
             <div class="flex flex-col gap-1 mt-4">
                 <p class="!text-secondary mt-2 font-light w-full !m-0"><i>ⓘ kamu bisa reply postingan lain dengan menyalin link postingan tersebut ke kolom pesan di atas</i></p>
-                <p class="!text-secondary mt-2 font-light w-full !m-0"><i>ⓘ untuk sekarang hanya bisa kirim menfess berupa teks</i></p>
                 <p class="!text-secondary mt-2 font-light w-full !m-0"><i>ⓘ untuk Cek Fee silakan kembali ke halaman sebelumnya</i></p>
             </div>
     

@@ -34,8 +34,11 @@
   <div class="w-full">
     {#if !file}
       <!-- File Input -->
-      <label class="flex flex-col items-center justify-center w-full h-14 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-        <div class="text-gray-500 text-sm">Upload gambar / video (jika perlu)</div>
+      <label class="flex flex-col items-center justify-center w-full h-[74px] border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+        <div class="flex flex-col items-center gap-3 ">
+          <i class="fa-solid fa-upload !text-sm"></i>
+          <p class='!text-secondary !text-xs'>Upload gambar / video (jika perlu)</p>
+        </div>
         <input
           type="file"
           class="hidden"
