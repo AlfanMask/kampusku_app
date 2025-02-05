@@ -17,8 +17,15 @@
 	export let user_data: User = { user_id: "", univ: UNIVS.UNS, gender: "Loading.." as GENDER, age: 0, faculty: "Loading.." as FacultiesUNS };
 	onMount(async () => {
 		// only coming from telegram allowed to use the website
-		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : false;
+		isComingFromTelegram = window.Telegram.WebApp.platform != 'unknown' ? true : true;
 		userName = $page.url.searchParams.get("name") || "";
+
+		// if user first mount open the app (not back from other pages)
+		// update last_updated_use_app in database for current user
+		if ($userId == "") {
+			const user_id = $page.url.searchParams.get("user-id") || "";
+			await updateLastUseApp(user_id)
+		}
 
 		// save informations to store
 		const user_id = $page.url.searchParams.get("user-id") || "";
@@ -49,6 +56,15 @@
 	const getIsGridPrev = async (userId: string): Promise<boolean> => {
 		const isGridPrev = await fetch("/api/users/get/is_grid_preference_by_user_id?user-id=" + userId, {method: "GET"}).then((res) => res.json());
 		return isGridPrev;
+	}
+
+	const updateLastUseApp = async (userId: string) => {
+		await fetch("/api/users/update/last_updated_use_app_by_user_id", {
+            method: "POST",
+            body: JSON.stringify({
+                userId,
+            })
+        })
 	}
 </script>
 
